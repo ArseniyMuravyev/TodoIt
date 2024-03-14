@@ -1,7 +1,7 @@
 {
-  "name": "todo",
+  "name": "backend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/todo/src",
+  "sourceRoot": "apps/backend/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,12 +10,12 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/todo",
+        "outputPath": "dist/apps/backend",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/todo/src/main.ts",
-        "tsConfig": "apps/todo/tsconfig.app.json",
-        "assets": ["apps/todo/src/assets"],
+        "main": "apps/backend/src/main.ts",
+        "tsConfig": "apps/backend/tsconfig.app.json",
+        "assets": ["apps/backend/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -41,20 +41,20 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "todo:build"
+        "buildTarget": "backend:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "todo:build:development"
+          "buildTarget": "backend:build:development"
         },
         "production": {
-          "buildTarget": "todo:build:production"
+          "buildTarget": "backend:build:production"
         }
       }
     },
     "docker-build": {
       "dependsOn": ["build"],
-      "command": "docker build -f apps/todo/Dockerfile . -t todo"
+      "command": "docker build -f apps/backend/Dockerfile . -t todo"
     }
   },
   "tags": []
