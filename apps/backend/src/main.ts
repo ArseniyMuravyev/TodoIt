@@ -1,5 +1,9 @@
-import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
+import { connectDB } from './db';
+import { todoRoutes } from './routes/todos';
+
+dotenv.config();
 
 interface Todo {
   id: number;
@@ -20,7 +24,11 @@ const HTTP_STATUSES = {
 
 let todos: Todo[] = [];
 
-app.use(bodyParser.json());
+app.use(express.json());
+
+connectDB();
+
+app.use('/todos', todoRoutes);
 
 app.get('/todos', (req: Request, res: Response) => {
   res.json(todos);
