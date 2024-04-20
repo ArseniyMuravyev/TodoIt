@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/backend",
+        "outputPath": "dist",
         "format": ["cjs"],
         "bundle": false,
         "main": "apps/backend/src/main.ts",
@@ -54,7 +54,7 @@
     },
     "docker-build": {
       "dependsOn": ["build"],
-      "command": "docker build -f apps/backend/Dockerfile . -t todo"
+      "command": "docker build -f apps/backend/Dockerfile . -t backend"
     }
   },
   "tags": []

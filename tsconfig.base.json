@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@arseniy/lib": ["lib/src/index.ts"]
+      "@arseniy/types": ["types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

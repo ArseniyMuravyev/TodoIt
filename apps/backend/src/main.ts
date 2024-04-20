@@ -1,82 +1,22 @@
-import dotenv from 'dotenv';
-import express, { Request, Response } from 'express';
-import { connectDB } from './db';
-import { todoRoutes } from './routes/todos';
+import express from 'express'
+import swaggerUi from 'swagger-ui-express'
+import YAML from 'yamljs'
+import { connectDB } from './config/db'
+import { router as todoRoute } from './routes/todo'
+import { router as userRoute } from './routes/auth'
 
-dotenv.config();
+const swaggerDocument = YAML.load('./swagger.yml')
 
-interface Todo {
-  id: number;
-  task: string;
-  completed: boolean;
-}
+const PORT = process.env.PORT ? Number(process.env.PORT) : 5000
 
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const app = express()
 
-const app = express();
+app.use('/todos', todoRoute)
+app.use('/auth', userRoute)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-const HTTP_STATUSES = {
-  CREATED_201: 201,
-  NO_CONTENT_204: 204,
-  NOT_FOUND_404: 404,
-};
-
-let todos: Todo[] = [];
-
-app.use(express.json());
-
-connectDB();
-
-app.use('/todos', todoRoutes);
-
-app.get('/todos', (req: Request, res: Response) => {
-  res.json(todos);
-});
-
-app.get('/todos/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  const todo = todos.find((todo) => todo.id === Number(id));
-
-  if (todo) {
-    res.json(todo);
-  } else {
-    res
-      .status(HTTP_STATUSES.NOT_FOUND_404)
-      .json({ message: 'Задача не найдена' });
-  }
-});
-
-app.post('/todos', (req: Request, res: Response) => {
-  const { task }: { task: string } = req.body;
-  const newTodo: Todo = {
-    id: todos.length + 1,
-    task: task,
-    completed: false,
-  };
-  todos.push(newTodo);
-  res.status(HTTP_STATUSES.CREATED_201).json(newTodo);
-});
-
-app.put('/todos/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { task, completed }: { task: string; completed: boolean } = req.body;
-  const todoIndex = todos.findIndex((todo) => todo.id === Number(id));
-  if (todoIndex !== -1) {
-    todos[todoIndex].task = task || todos[todoIndex].task;
-    todos[todoIndex].completed = completed || todos[todoIndex].completed;
-    res.json(todos[todoIndex]);
-  } else {
-    res
-      .status(HTTP_STATUSES.NOT_FOUND_404)
-      .json({ message: 'Задача не найдена' });
-  }
-});
-
-app.delete('/todos/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  todos = todos.filter((todo) => todo.id !== Number(id));
-  res.sendStatus(HTTP_STATUSES.NO_CONTENT_204);
-});
-
-app.listen(port, host, () => {});
+app.listen(PORT, () => {
+  connectDB().then(() => {
+    console.log(`Server is running on port ${PORT}`)
+  })
+})
