@@ -1,33 +1,34 @@
-import { Navigate, useLocation } from 'react-router-dom'
-import { useSelector } from '../services/store'
-import { Preloader } from './Preloader'
+import { ReactElement } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useSelector } from "../store/store";
+import { Preloader } from "./Preloader";
 
 type ProtectedRouteProps = {
-  onlyUnAuth?: boolean
-  children: React.ReactElement
-}
+	onlyUnAuth?: boolean;
+	children: ReactElement;
+};
 
 export const ProtectedRoute = ({
-  children,
-  onlyUnAuth,
+	children,
+	onlyUnAuth,
 }: ProtectedRouteProps) => {
-  const isAuthChecked = useSelector((state) => state.user.isAuthChecked)
-  const user = useSelector((state) => state.user.user)
-  const location = useLocation()
-  
-  if (!isAuthChecked) {
-    return <Preloader />
-  }
+	const loading = useSelector((state) => state.user.loading);
+	const user = useSelector((state) => state.user.user);
+	const location = useLocation();
 
-  if (!onlyUnAuth && !user) {
-    return <Navigate replace to="/login" />
-  }
+	if (loading) {
+		return <Preloader />;
+	}
 
-  if (onlyUnAuth && user) {
-    const from = location.state?.from || { pathname: '/' }
+	if (!onlyUnAuth && !user) {
+		return <Navigate replace to="/login" />;
+	}
 
-    return <Navigate replace to={from} />
-  }
+	if (onlyUnAuth && user) {
+		const from = location.state?.from || { pathname: "/" };
 
-  return children
-}
+		return <Navigate replace to={from} />;
+	}
+
+	return children;
+};

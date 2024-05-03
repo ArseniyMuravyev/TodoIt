@@ -1,8 +1,25 @@
 {
-  "name": "frontend",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/frontend/src",
-  "projectType": "application",
-  "targets": {},
-  "tags": []
+	"name": "frontend",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/frontend/src",
+	"projectType": "application",
+	"targets": {},
+	"tags": [],
+	"lint": {
+		"executor": "@nx/eslint:lint",
+		"outputs": ["{options.outputFile}"],
+		"options": {
+			"lintFilePatterns": ["apps/frontend/**/*.ts"],
+			"fix": true
+		}
+	},
+	"e2e": {
+		"builder": "@nrwl/cypress:cypress",
+		"options": {
+			"watch": true,
+			"cypressConfig": "apps/frontend/cypress.config.ts",
+			"tsConfig": "apps/frontend/cypress/tsconfig.json",
+			"devServerTarget": "frontend:serve"
+		}
+	}
 }

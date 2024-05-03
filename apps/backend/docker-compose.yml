@@ -1,26 +1,27 @@
-version: '3.8'
+version: "3.8"
 services:
-  mongo:
+  mongodb-server:
     image: mongo
     container_name: mongodb-server
-    networks:
-      - backend-net
     volumes:
       - todoapp:/data/db
-  express-server:
-    build:
-      context: C:/dev/arseniy/apps/backend
-      dockerfile: Dockerfile
-    container_name: express-server
     networks:
       - backend-net
+
+  express-server:
+    build:
+      context: ../../
+      dockerfile: ./apps/backend/Dockerfile
+    container_name: express-server
     ports:
       - "5000:5000"
-    environment:
-      - PORT=5000
-      - MONGO_URI=mongodb://mongodb-server/todoapp
-    volumes:
-      - C:/dev/arsenyiy/apps/backend:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - mongodb-server
+    networks:
+      - backend-net
+    command: node main.js
 
 networks:
   backend-net:

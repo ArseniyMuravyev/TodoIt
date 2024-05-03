@@ -12,3 +12,4 @@ COPY dist/apps/backend/src /app/
 EXPOSE 5000
 
 CMD [ "node", "main.js" ]
+

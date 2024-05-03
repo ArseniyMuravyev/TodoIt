@@ -1,0 +1,66 @@
+{
+	"home": {
+		"title": "The Greatest Todo App You Have Ever Seen!",
+		"title_description": "Let's create an account and get started!",
+		"error_title": "Oops!",
+		"error_description": "Sorry, an unexpected error has occurred."
+	},
+	"user": {
+		"login": "Login",
+		"signUp": "Sign Up",
+		"new_user": "New user?",
+		"forgot_password": "Forgot the password?",
+		"reset_password": "Reset the password",
+		"entrance": "Entrance",
+		"registration": "Registration",
+		"already_registered": "Already registered?",
+		"reset": "Reset",
+		"remember_password": "Remember the password?",
+		"password_recovery": "Password recovery",
+		"logout": "Logout",
+		"cancel": "Cancel",
+		"save": "Save",
+		"name": "Name",
+		"password": "Password",
+		"email_code": "Code from the email",
+		"submitting": "Submitting...",
+		"activation": "Activational link sent to your mail",
+		"delete": "Delete account",
+		"activated": "Your account is activated",
+		"not-activated": "Your accout isn't activated, check your email"
+	},
+	"navigation": {
+		"home": "Home",
+		"my_todos": "My todos"
+	},
+	"todos": {
+		"add_task": "Add todo",
+		"all_todos": "All todos",
+		"today": "Today",
+		"this_week": "This week",
+		"task_name": "Todo's name",
+		"completed": "Completed"
+	},
+	"modal": {
+		"status": "Status: ",
+		"done": "done",
+		"not_done": "not done",
+		"title": "Are you sure you want to remove the todo?",
+		"delete": "Delete"
+	},
+	"success": {
+		"success": "Success",
+		"reset": "A link to reset your password has been sent to your email.",
+		"update": "The task has been successfully updated",
+		"delete": "The task has been successfully deleted",
+		"profile": "The user's profile has been successfully updated",
+		"logout": "You have successfully logged out of your account"
+	},
+	"error": {
+		"error": "Error",
+		"unexpected": "Unexpected error",
+		"id": "The user ID could not be determined",
+		"profile": "An error occurred while updating the profile",
+		"empty": "Email and password should not be empty"
+	}
+}

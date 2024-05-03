@@ -1,21 +1,20 @@
 {
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "allowJs": false,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "types": ["vite/client", "vitest"]
-  },
-  "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ],
-  "extends": "../../tsconfig.base.json"
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"allowJs": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"types": ["jest"]
+	},
+	"files": [],
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"**/*.test.ts",
+		"**/*.spec.ts",
+		"cypress/support/commands.ts"
+	],
+	"exclude": ["node_modules"],
+	"extends": "../../tsconfig.base.json"
 }

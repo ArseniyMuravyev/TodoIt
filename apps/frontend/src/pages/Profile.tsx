@@ -1,148 +1,92 @@
-import { Box, Button, Input, VStack, useToast } from '@chakra-ui/react'
-import { FC, SyntheticEvent, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from '../services/store'
-import { getUser, logoutUser, updateUser } from '../services/user/actions'
+import { TUser } from "@arseniy/types";
+import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react";
+import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { FormInput } from "../components/FormInput";
+import { ProfileButtos } from "../components/ProfileButtons";
+import { deleteUser, logout, updateUser } from "../features/user/actions";
+import { useToast } from "../hooks/useToast";
+import { AuthResponse } from "../models/response/AuthResponse";
+import { useDispatch, useSelector } from "../store/store";
 
-export const Profile: FC = () => {
-  const dispatch = useDispatch()
-  const user = useSelector((state) => state.user.user)
-  const toast = useToast()
+const Profile: FC = () => {
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user.user as TUser);
+	const { id, name } = user || { id: "", name: "" };
+	const { showSuccess, showError } = useToast();
+	const { t } = useTranslation();
+	const [userName, setUserName] = useState(name);
 
-  useEffect(() => {
-    dispatch(getUser())
-  }, [dispatch])
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setUserName(e.target.value);
+	};
 
-  const [formValue, setFormValue] = useState({
-    name: user?.name ?? '',
-    email: user?.email ?? '',
-    password: '',
-  })
+	const isFormChanged = userName !== name;
 
-  useEffect(() => {
-    setFormValue({
-      name: user?.name ?? '',
-      email: user?.email ?? '',
-      password: '',
-    })
-  }, [user])
+	const handleSubmit = (e: SyntheticEvent) => {
+		e.preventDefault();
 
-  const isFormChanged =
-    formValue.name !== user?.name ||
-    formValue.email !== user?.email ||
-    !!formValue.password
+		if (!id) {
+			showError(t("error.id"));
+			return;
+		}
 
-  const handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault()
+		if (!userName) {
+			showError(t("error.empty"));
+			return;
+		}
 
-    if (!user?._id) {
-      toast({
-        title: 'Ошибка',
-        description: 'Не удалось определить идентификатор пользователя.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
-      return
-    }
+		dispatch(updateUser({ id, name: userName }))
+			.unwrap()
+			.then((updatedUser: AuthResponse) => {
+				setUserName(updatedUser.name);
+				showSuccess(t("success.profile"));
+			})
+			.catch((error) => {
+				showError(error.message || t("error.profile"));
+			});
+	};
 
-    const userDataToUpdate = {
-      ...formValue,
-      _id: user._id,
-    }
+	const handleLogout = () => {
+		dispatch(logout());
+		showSuccess(t("success.logout"));
+	};
 
-    dispatch(updateUser(userDataToUpdate))
-      .unwrap()
-      .then((updatedUser) => {
-        setFormValue({
-          name: updatedUser.name,
-          email: updatedUser.email,
-          password: '',
-        })
-        toast({
-          title: 'Успех',
-          description: 'Профиль пользователя успешно обновлен.',
-          status: 'success',
-          duration: 5000,
-          isClosable: true,
-        })
-      })
-      .catch((error) => {
-        toast({
-          title: 'Ошибка',
-          description:
-            error.message || 'Произошла ошибка при обновлении профиля.',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
-      })
-  }
+	const handleCancel = (e: SyntheticEvent) => {
+		e.preventDefault();
+		setUserName(name);
+	};
 
-  const handleLogout = () => {
-    dispatch(logoutUser())
-    toast({
-      title: 'Выход выполнен',
-      description: 'Вы успешно вышли из системы.',
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    })
-  }
+	const handleDelete = () => {
+		dispatch(deleteUser(user?.id));
+	};
 
-  const handleCancel = (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    setFormValue({
-      name: user?.name ?? '',
-      email: user?.email ?? '',
-      password: '',
-    })
-  }
+	return (
+		<Box>
+			<VStack as="form" spacing="4" onSubmit={handleSubmit} mt="8">
+				<FormInput
+					type="text"
+					placeholder={t("user.name")}
+					onChange={handleInputChange}
+					value={userName}
+					name="name"
+				/>
+				<Text fontSize='lg'>
+					{user?.isActivated ? t("user.activated") : t("user.not-activated")}
+				</Text>
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValue((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
+				{isFormChanged && <ProfileButtos handleCancel={handleCancel} />}
+				<Flex gap="4">
+					<Button variant="link" colorScheme="blue" onClick={handleLogout}>
+						{t("user.logout")}
+					</Button>
+					<Button variant="link" colorScheme="red" onClick={handleDelete}>
+						{t("user.delete")}
+					</Button>
+				</Flex>
+			</VStack>
+		</Box>
+	);
+};
 
-  return (
-    <Box>
-      <VStack as="form" spacing={4} onSubmit={handleSubmit} mt="30px">
-        <Input
-          type="text"
-          placeholder="Имя"
-          onChange={handleInputChange}
-          value={formValue.name}
-          name="name"
-        />
-        <Input
-          type="email"
-          placeholder="E-mail"
-          onChange={handleInputChange}
-          value={formValue.email}
-          name="email"
-        />
-        <Input
-          type="password"
-          placeholder="Пароль"
-          onChange={handleInputChange}
-          value={formValue.password}
-          name="password"
-        />
-        {isFormChanged && (
-          <Box>
-            <Button variant="outline" onClick={handleCancel} mr={3}>
-              Отменить
-            </Button>
-            <Button variant="solid" type="submit">
-              Сохранить
-            </Button>
-          </Box>
-        )}
-        <Button variant="link" colorScheme="blue" onClick={handleLogout}>
-          Выход
-        </Button>
-      </VStack>
-    </Box>
-  )
-}
+export default Profile;

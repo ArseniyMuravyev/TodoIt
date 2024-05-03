@@ -1,23 +1,25 @@
-import { Box } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-import { useDispatch } from './services/store'
-import { checkUserAuth } from './services/user/actions'
+import { Box } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { checkAuth } from "./features/user/actions";
+import { useDispatch } from "./store/store";
 
-export default function App() {
-  const dispatch = useDispatch()
+export const App = () => {
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(checkUserAuth())
-  }, [])
+	useEffect(() => {
+		if (localStorage.getItem("accessToken")) {
+			dispatch(checkAuth());
+		}
+	}, [dispatch]);
 
-  return (
-    <Box minH="100vh" px="24">
-      <Header />
-      <Outlet />
-      <Footer />
-    </Box>
-  )
-}
+	return (
+		<Box minH="100vh" px={{ base: 6, md: 12 }}>
+			<Header />
+			<Outlet />
+			<Footer />
+		</Box>
+	);
+};

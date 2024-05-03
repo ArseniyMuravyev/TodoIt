@@ -6,14 +6,14 @@ info:
 host: "localhost:5000"
 basePath: "/"
 schemes:
-- "http"
+  - "http"
 paths:
   /todos:
     get:
       summary: "Lists all the todos"
       operationId: "getTodos"
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         200:
           description: "An array of todos"
@@ -25,16 +25,16 @@ paths:
       summary: "Create a new todo"
       operationId: "addTodo"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Todo object that needs to be added to the store"
-        required: true
-        schema:
-          $ref: "#/definitions/Todo"
+        - in: "body"
+          name: "body"
+          description: "Todo object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Todo"
       responses:
         200:
           description: "New todo created"
@@ -46,13 +46,13 @@ paths:
       description: "Returns a single todo"
       operationId: "getTodoById"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "id"
-        in: "path"
-        description: "ID of todo to return"
-        required: true
-        type: "string"
+        - name: "id"
+          in: "path"
+          description: "ID of todo to return"
+          required: true
+          type: "string"
       responses:
         200:
           description: "successful operation"
@@ -65,21 +65,21 @@ paths:
       description: "Updates an existing todo"
       operationId: "updateTodo"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "id"
-        in: "path"
-        description: "ID of todo that needs to be updated"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Updated todo object"
-        required: true
-        schema:
-          $ref: "#/definitions/Todo"
+        - name: "id"
+          in: "path"
+          description: "ID of todo that needs to be updated"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated todo object"
+          required: true
+          schema:
+            $ref: "#/definitions/Todo"
       responses:
         200:
           description: "Todo updated"
@@ -92,34 +92,119 @@ paths:
       description: "Deletes an existing todo"
       operationId: "deleteTodo"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "id"
-        in: "path"
-        description: "ID of the todo that needs to be deleted"
-        required: true
-        type: "string"
+        - name: "id"
+          in: "path"
+          description: "ID of the todo that needs to be deleted"
+          required: true
+          type: "string"
       responses:
         200:
           description: "Todo deleted"
         404:
           description: "Todo not found"
+
+          /auth/register:
+    post:
+      summary: "Registers a new user"
+      operationId: "registerUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User object that needs to be registered"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "User registered and tokens generated"
+        400:
+          description: "User already exists"
+
+  /auth/login:
+    post:
+      summary: "Authenticates a user and returns a token"
+      operationId: "loginUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User's login credentials"
+          required: true
+      responses:
+        200:
+          description: "Login successful"
+        401:
+          description: "Unauthorized"
+
+  /auth/user:
+    get:
+      summary: "Gets the current logged in user's information"
+      operationId: "getCurrentUser"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "User information returned"
+        401:
+          description: "Unauthorized"
+
+  /auth/logout:
+    post:
+      summary: "Logs out the current user"
+      operationId: "logoutUser"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Logout successful"
 definitions:
   Todo:
     type: "object"
     required:
-    - "title"
+      - "title"
     properties:
       _id:
         type: "string"
-        description: "The auto-generated id of the todo"
       title:
         type: "string"
-        description: "The title of the todo item"
       completed:
         type: "boolean"
-        description: "The completion status of the todo item"
+      date:
+        type: "date"
     example:
       _id: "d5fE_asz"
       title: "Walk the dog"
       completed: false
+  User:
+    type: "object"
+    required:
+      - "name"
+      - "email"
+      - "password"
+    properties:
+      _id:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      name:
+        type: "string"
+      resetCode:
+        type: "string"
+      resetCodeExpire:
+        type: "number"
+    example:
+      _id: "d5fE_aszasdasdq"
+      email: "johndoe@gmail.com"
+      password: "password"
+      name: "John"

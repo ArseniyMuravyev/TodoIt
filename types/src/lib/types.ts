@@ -1,12 +1,15 @@
 export interface ITodo {
-  _id: string 
-  title: string
-  completed: boolean
-  date?: Date
+	_id: string;
+	title: string;
+	completed: boolean;
+	date?: Date;
 }
 
-export type TUser = {
-  _id: string
-  email: string
-  name: string
+export interface TUser {
+	id: string;
+	email: string;
+	name: string;
+	accessToken?: string;
+	refreshToken?: string;
+	isActivated?: boolean;
 }
