@@ -45,14 +45,15 @@
 		"status": "Status: ",
 		"done": "done",
 		"not_done": "not done",
-		"title": "Are you sure you want to remove the todo?",
+		"todo_title": "Are you sure you want to delete the todo?",
+		"user_title": "Are you sure you want to delete your account?",
 		"delete": "Delete"
 	},
 	"success": {
 		"success": "Success",
 		"reset": "A link to reset your password has been sent to your email.",
-		"update": "The task has been successfully updated",
-		"delete": "The task has been successfully deleted",
+		"update": "Successfully updated",
+		"delete": "Successfully deleted",
 		"profile": "The user's profile has been successfully updated",
 		"logout": "You have successfully logged out of your account"
 	},

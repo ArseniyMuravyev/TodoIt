@@ -104,7 +104,7 @@ class UserController {
 			next(error);
 		}
 	}
-	
+
 	async activate(req: Request, res: Response, next: NextFunction) {
 		try {
 			const activationLink = req.params.link;

@@ -4,10 +4,12 @@ import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FormInput } from "../components/FormInput";
 import { ProfileButtos } from "../components/ProfileButtons";
+import { IConfirmDeletion } from "../components/TodoInfo";
 import { deleteUser, logout, updateUser } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { AuthResponse } from "../models/response/AuthResponse";
 import { useDispatch, useSelector } from "../store/store";
+import { Modal } from "../components/Modal";
 
 const Profile: FC = () => {
 	const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const Profile: FC = () => {
 	const { showSuccess, showError } = useToast();
 	const { t } = useTranslation();
 	const [userName, setUserName] = useState(name);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setUserName(e.target.value);
@@ -59,6 +62,16 @@ const Profile: FC = () => {
 
 	const handleDelete = () => {
 		dispatch(deleteUser(user?.id));
+		setIsDeleteModalOpen(false);
+		showSuccess(t("success.delete"));
+	};
+
+	const handleOpenModal = () => {
+		setIsDeleteModalOpen(true);
+	};
+
+	const handleCloseModal = () => {
+		setIsDeleteModalOpen(false);
 	};
 
 	return (
@@ -71,7 +84,7 @@ const Profile: FC = () => {
 					value={userName}
 					name="name"
 				/>
-				<Text fontSize='lg'>
+				<Text fontSize="lg">
 					{user?.isActivated ? t("user.activated") : t("user.not-activated")}
 				</Text>
 
@@ -80,12 +93,37 @@ const Profile: FC = () => {
 					<Button variant="link" colorScheme="blue" onClick={handleLogout}>
 						{t("user.logout")}
 					</Button>
-					<Button variant="link" colorScheme="red" onClick={handleDelete}>
+					<Button variant="link" colorScheme="red" onClick={handleOpenModal}>
 						{t("user.delete")}
 					</Button>
 				</Flex>
+				{isDeleteModalOpen && (
+					<Modal title={t("modal.user_title")} handleClose={handleCloseModal}>
+						<ConfirmUserDeletion
+							handleDelete={handleDelete}
+							handleCloseModal={handleCloseModal}
+						/>
+					</Modal>
+				)}
 			</VStack>
 		</Box>
+	);
+};
+
+const ConfirmUserDeletion: FC<IConfirmDeletion> = ({
+	handleDelete,
+	handleCloseModal,
+}) => {
+	const { t } = useTranslation();
+	return (
+		<Flex justifyContent="center" alignItems="center" mt="28" gap="8">
+			<Button colorScheme="red" mr={3} onClick={handleDelete} w="24">
+				{t("modal.delete")}
+			</Button>
+			<Button onClick={handleCloseModal} w="24">
+				{t("user.cancel")}
+			</Button>
+		</Flex>
 	);
 };
 

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "../store/store";
 import { formatDate } from "../utils/helpers";
 import { Modal } from "./Modal";
 
-interface IConfirmTodoDeletion {
+export interface IConfirmDeletion {
 	handleDelete: MouseEventHandler<HTMLButtonElement>;
 	handleCloseModal: () => void;
 }
@@ -123,7 +123,7 @@ export const TodoInfo: FC = () => {
 					<Trash2 />
 				</Button>
 				{isDeleteModalOpen && (
-					<Modal title={t("modal.title")} handleClose={handleCloseModal}>
+					<Modal title={t("modal.todo_title")} handleClose={handleCloseModal}>
 						<ConfirmTodoDeletion
 							handleDelete={handleDelete}
 							handleCloseModal={handleCloseModal}
@@ -135,7 +135,7 @@ export const TodoInfo: FC = () => {
 	);
 };
 
-const ConfirmTodoDeletion: FC<IConfirmTodoDeletion> = ({
+const ConfirmTodoDeletion: FC<IConfirmDeletion> = ({
 	handleDelete,
 	handleCloseModal,
 }) => {
