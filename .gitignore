@@ -9,6 +9,8 @@ tmp
 node_modules
 
 # IDEs and editors
+.vscode
+.yarn
 /.idea
 .project
 .classpath
