@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 
 export const errorMiddleware = (
-	err: any,
+	error: any,
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	console.error(err);
+	console.error(error);
 
 	return res
-		.status(err.status)
-		.json({ message: err.message, errors: err.errors });
+		.status(error.status)
+		.json({ message: error.message, errors: error.errors });
 };

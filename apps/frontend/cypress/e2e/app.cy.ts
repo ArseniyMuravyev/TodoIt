@@ -11,8 +11,8 @@ describe("Интегрированные тесты для приложения"
 
 		cy.visit("http://localhost:4200/");
 
-		const email = "asmar@icloud.a";
-		const password = "1234";
+		const email = "aamuravyev@icloud.com";
+		const password = "123456";
 
 		cy.visit("/login");
 		cy.get("input[name=email]").type(email, { force: true });
@@ -38,20 +38,20 @@ describe("Интегрированные тесты для приложения"
 
 	describe("проверяем работу модальных окон", () => {
 		it("модальное окно должно открываться по клику на задачу", () => {
-			cy.visit("/todos");
+			cy.getTodosLink().click({ force: true });
 			cy.getTodo().first().click({ force: true });
 			cy.getModal().should("exist");
 		});
 
 		it("модальное окно должно закрываться по клику на крестик", () => {
-			cy.visit("/todos");
+			cy.getTodosLink().click({ force: true });
 			cy.getTodo().first().click({ force: true });
 			cy.getModalCloseButton().click({ force: true });
 			cy.getModal().should("not.exist");
 		});
 
 		it("модальное окно должно открываться с правильн", () => {
-			cy.visit("/todos");
+			cy.getTodosLink().click({ force: true });
 			cy.getTodo().contains("Покушать!").click({ force: true });
 			cy.getModal().contains("Покушать!").should("exist");
 		});

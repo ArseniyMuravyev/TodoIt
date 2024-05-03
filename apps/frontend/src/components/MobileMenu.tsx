@@ -39,7 +39,7 @@ export const MobileMenu: FC<IMobileMenu> = ({
 					<NavLink to="/" onClick={onToggle}>
 						{t("navigation.home")}
 					</NavLink>
-					<NavLink to="/todos" onClick={onToggle}>
+					<NavLink to="/todos" onClick={onToggle} data-cy="todos">
 						{t("navigation.my_todos")}
 					</NavLink>
 					<UserButton onClick={onToggle} />

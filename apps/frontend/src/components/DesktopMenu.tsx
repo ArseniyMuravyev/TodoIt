@@ -26,6 +26,7 @@ export const DesktopMenu: FC = () => {
 						textDecoration: isActive ? "underline" : "none",
 					};
 				}}
+				data-cy='todos'
 			>
 				{t("navigation.my_todos")}
 			</NavLink>
