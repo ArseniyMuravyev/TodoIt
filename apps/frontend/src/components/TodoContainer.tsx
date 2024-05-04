@@ -26,6 +26,7 @@ export const TodoContainer: FC<ITodoContainer> = ({ title, todos }) => {
 			break;
 		case "todos.completed":
 			translatedTitle = t("todos.completed");
+			break;
 		default:
 			translatedTitle = title;
 	}

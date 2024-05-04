@@ -22,11 +22,6 @@ describe("Интегрированные тесты для приложения"
 		cy.url().should("eq", "http://localhost:4200/");
 
 		cy.getCookie("accessToken").should("exist");
-
-		cy.window().should((win) => {
-			const token = win.localStorage.getItem("refreshToken");
-			expect(token).to.exist;
-		});
 	});
 
 	afterEach(() => {

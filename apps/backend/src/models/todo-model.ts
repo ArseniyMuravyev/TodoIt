@@ -1,4 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
+
+export interface ITodoSchema extends Document {
+	title: string;
+	completed: boolean;
+	date: Date;
+	userId: Schema.Types.ObjectId;
+}
 
 const TodoSchema = new Schema({
 	title: { type: String, required: true },
@@ -11,4 +18,4 @@ const TodoSchema = new Schema({
 	},
 });
 
-export const TodoModel = model("Todo", TodoSchema);
+export const TodoModel = model<ITodoSchema>("Todo", TodoSchema);

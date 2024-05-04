@@ -2,11 +2,11 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { UserDto } from "../dtos/user-dto";
 import { ApiError } from "../exceptions/api-error";
-import { UserModel } from "../models/user-model";
+import { IUserSchema, UserModel } from "../models/user-model";
 import { mailService } from "./mail-service";
 import { tokenService } from "./token-service";
 
-const generateTokensFromDto = async (user: any) => {
+const generateTokensFromDto = async (user: IUserSchema) => {
 	const userDto = new UserDto(user);
 
 	const tokens = tokenService.generateTokens({ ...userDto });
@@ -18,7 +18,7 @@ const generateTokensFromDto = async (user: any) => {
 	};
 };
 
-const saveUserDto = async (user: any) => {
+const saveUserDto = async (user: IUserSchema) => {
 	await user.save();
 	const userDto = new UserDto(user);
 	return userDto;
@@ -83,7 +83,7 @@ class UserService {
 		}
 
 		const user = await UserModel.findById(userData.id);
-		return generateTokensFromDto(user);
+		return generateTokensFromDto(user!);
 	}
 
 	async activate(activationLink: string) {

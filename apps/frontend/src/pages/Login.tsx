@@ -51,13 +51,13 @@ const Login: FC = () => {
 	const onClick = () => setShow((prev) => !prev);
 
 	return (
-		<Flex justifyContent="center" align="center" p="6">
+		<Flex justifyContent="center" alignItems="center" p="6">
 			<VStack spacing="6" w="100%">
 				<Heading as="h1" pb="6">
 					{t("user.entrance")}
 				</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w="50vw">
+					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
 						<EmailInput register={register} errors={errors} />
 						<PasswordInput
 							show={show}
@@ -78,18 +78,23 @@ const Login: FC = () => {
 				</form>
 				<Flex
 					mt="2"
-					align='center'
-					gap="2"
-					flexDirection="column"
+					justifyContent="center"
+					alignItems="center"
+					gap={{ base: "8", md: "2" }}
+					flexDirection={{ base: "row", md: "column" }}
 				>
 					<Flex gap="2">
-						<Text>{t("user.new_user")}</Text>
+						<Text display={{ base: "none", md: "flex" }}>
+							{t("user.new_user")}
+						</Text>
 						<Link to="/register">
 							<Text color="blue.500">{t("user.signUp")}</Text>
 						</Link>
 					</Flex>
 					<Flex gap="2">
-						<Text>{t("user.forgot_password")}</Text>
+						<Text display={{ base: "none", md: "flex" }}>
+							{t("user.forgot_password")}
+						</Text>
 						<Link to="/forgot-password">
 							<Text color="blue.500">{t("user.reset_password")}</Text>
 						</Link>

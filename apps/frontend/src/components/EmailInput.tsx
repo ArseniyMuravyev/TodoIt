@@ -1,9 +1,14 @@
 import { Input, Text } from "@chakra-ui/react";
 import { FC } from "react";
+import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+interface FormValues {
+	email: string;
+}
+
 interface IEmailInput {
-	register: any;
+	register: UseFormRegister<FormValues>;
 	errors: any;
 }
 

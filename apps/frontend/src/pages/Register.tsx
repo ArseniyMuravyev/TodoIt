@@ -49,7 +49,7 @@ const Register: FC = () => {
 					{t("user.registration")}
 				</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w="50vw">
+					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
 						<Input
 							type="text"
 							placeholder={t("user.name")}
@@ -63,7 +63,12 @@ const Register: FC = () => {
 							onClick={onClick}
 							errors={errors}
 						/>
-						<Button colorScheme="blue" type="submit" disabled={isSubmitting}>
+						<Button
+							colorScheme="blue"
+							type="submit"
+							disabled={isSubmitting}
+							w="full"
+						>
 							{isSubmitting ? t("user.submitting") : t("user.signUp")}
 						</Button>
 					</VStack>

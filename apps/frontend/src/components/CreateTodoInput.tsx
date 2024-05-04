@@ -55,29 +55,36 @@ export const CreateTodoInput: FC<ICreateTodoInput> = ({
 	return (
 		<Box mt="4">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Flex gap="4" h="10">
+				<Flex
+					gap="4"
+					h={{ base: "100%", md: "10" }}
+					flexDirection={{ base: "column", md: "row" }}
+				>
 					<Input
 						type="text"
 						{...register("title", { required: true })}
 						placeholder={t("todos.task_name")}
 						onKeyDown={handleKeyDown}
-						maxW="160"
-						h="100%"
+						maxW={{ base: "100%", md: "160" }}
+						h={{ base: "10", md: "100%" }}
+						textAlign="center"
 					/>
-					<Controller
-						control={control}
-						name="date"
-						rules={{ required: "Date is required" }}
-						render={({ field }) => (
-							<DatePicker
-								date={field.value}
-								setDate={(date) => field.onChange(date)}
-							/>
-						)}
-					/>
-					<Button type="submit" h="100%" bg="none">
-						<CirclePlus size="20" />
-					</Button>
+					<Flex alignItems="center" gap="2">
+						<Controller
+							control={control}
+							name="date"
+							rules={{ required: "Date is required" }}
+							render={({ field }) => (
+								<DatePicker
+									date={field.value}
+									setDate={(date) => field.onChange(date)}
+								/>
+							)}
+						/>
+						<Button type="submit" h="100%" bg="none">
+							<CirclePlus size="20" />
+						</Button>
+					</Flex>
 				</Flex>
 			</form>
 		</Box>

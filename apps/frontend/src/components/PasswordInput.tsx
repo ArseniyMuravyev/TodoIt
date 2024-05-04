@@ -1,13 +1,24 @@
-import { Button, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react";
+import {
+	Button,
+	Input,
+	InputGroup,
+	InputRightElement,
+	Text,
+} from "@chakra-ui/react";
 import { FC } from "react";
+import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+interface FormValues {
+	[password: string]: string;
+}
+
 interface IPasswordInput {
-	register: any;
+	register: UseFormRegister<FormValues>;
 	onClick: () => void;
 	show: boolean;
 	errors: any;
-	type?: string
+	type?: string;
 }
 
 export const PasswordInput: FC<IPasswordInput> = ({

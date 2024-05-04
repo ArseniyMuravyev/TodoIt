@@ -15,7 +15,9 @@ const Home: FC = () => {
 			</Heading>
 			{!user && (
 				<Flex mt="6" alignItems="center" flexDirection="column">
-					<Text fontSize="xl">{t("home.title_description")}</Text>
+					<Text textAlign="center" fontSize="xl">
+						{t("home.title_description")}
+					</Text>
 					<Flex mt="6" gap="8">
 						<Button
 							w={i18n.language === "ru" ? "48" : "24"}

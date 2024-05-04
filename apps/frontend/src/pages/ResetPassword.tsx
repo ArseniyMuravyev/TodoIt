@@ -34,7 +34,6 @@ const ResetPassword: FC = () => {
 		}
 		data.email = localStorage.getItem("resetEmail")!;
 
-
 		try {
 			dispatch(resetPassword(data))
 				.unwrap()
@@ -59,7 +58,7 @@ const ResetPassword: FC = () => {
 			<VStack spacing="6">
 				<Heading size="lg">{t("user.password_recovery")}</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w="50vw">
+					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
 						<PasswordInput
 							onClick={onClick}
 							show={show}
@@ -72,7 +71,12 @@ const ResetPassword: FC = () => {
 							placeholder={t("user.email_code")}
 							{...register("resetCode", { required: "Неправильный код" })}
 						/>
-						<Button colorScheme="blue" type="submit" disabled={isSubmitting}>
+						<Button
+							colorScheme="blue"
+							type="submit"
+							disabled={isSubmitting}
+							w="full"
+						>
 							{isSubmitting ? t("user.submitting") : t("user.save")}
 						</Button>
 					</VStack>

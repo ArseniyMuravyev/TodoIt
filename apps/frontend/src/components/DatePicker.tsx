@@ -10,7 +10,7 @@ interface IDatePicker {
 
 export const DatePicker: FC<IDatePicker> = ({ date, setDate }) => {
 	return (
-		<Box maxW="140" h="100%" position="relative">
+		<Box maxW="170" h="100%" position="relative">
 			<SingleDatepicker
 				name="date-input"
 				date={date || undefined}

@@ -8,7 +8,6 @@ import { ProfileButtos } from "../components/ProfileButtons";
 import { IConfirmDeletion } from "../components/TodoInfo";
 import { deleteUser, logout, updateUser } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
-import { AuthResponse } from "../models/response/AuthResponse";
 import { useDispatch, useSelector } from "../store/store";
 
 interface IFormInput {
@@ -18,35 +17,40 @@ interface IFormInput {
 const Profile: FC = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user.user as TUser);
+
 	const { id, name } = user || { id: "", name: "" };
 	const { showSuccess, showError } = useToast();
 	const { t } = useTranslation();
-	const [userName, setUserName] = useState(name);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
-	} = useForm<IFormInput>({});
-
-	const isFormChanged = userName !== name;
+		reset,
+		formState: { isDirty },
+	} = useForm<IFormInput>({
+		defaultValues: {
+			name,
+		},
+		mode: "onChange",
+	});
 
 	const onSubmit: SubmitHandler<IFormInput> = (data) => {
+		if (!isDirty) return;
+
 		if (!id) {
 			showError(t("error.id"));
 			return;
 		}
 
-		if (!userName) {
+		if (!data.name) {
 			showError(t("error.empty"));
 			return;
 		}
 
-		dispatch(updateUser({ id, name: userName }))
+		dispatch(updateUser({ id, name: data.name }))
 			.unwrap()
-			.then((updatedUser: AuthResponse) => {
-				setUserName(updatedUser.name);
+			.then(() => {
 				showSuccess(t("success.profile"));
 			})
 			.catch((error) => {
@@ -61,7 +65,9 @@ const Profile: FC = () => {
 
 	const handleCancel = (e: SyntheticEvent) => {
 		e.preventDefault();
-		setUserName(name);
+		reset({
+			name: name,
+		});
 	};
 
 	const handleDelete = () => {
@@ -85,23 +91,33 @@ const Profile: FC = () => {
 				spacing="4"
 				onSubmit={handleSubmit(onSubmit)}
 				mt="8"
-				w="50vw"
+				w={{ base: "80vw", md: "50vw" }}
 			>
 				<Input
 					type="text"
 					placeholder={t("user.name")}
 					{...register("name", { required: true })}
 				/>
-				<Text fontSize="lg">
+				<Text fontSize="md" textAlign="center">
 					{user?.isActivated ? t("user.activated") : t("user.not-activated")}
 				</Text>
 
-				{isFormChanged && <ProfileButtos handleCancel={handleCancel} />}
+				{isDirty && <ProfileButtos handleCancel={handleCancel} />}
 				<Flex gap="4">
-					<Button variant="link" colorScheme="blue" onClick={handleLogout}>
+					<Button
+						variant="link"
+						colorScheme="blue"
+						onClick={handleLogout}
+						w="32"
+					>
 						{t("user.logout")}
 					</Button>
-					<Button variant="link" colorScheme="red" onClick={handleOpenModal}>
+					<Button
+						variant="link"
+						colorScheme="red"
+						onClick={handleOpenModal}
+						w="32"
+					>
 						{t("user.delete")}
 					</Button>
 				</Flex>
@@ -124,8 +140,8 @@ const ConfirmUserDeletion: FC<IConfirmDeletion> = ({
 }) => {
 	const { t } = useTranslation();
 	return (
-		<Flex align="center" mt="28" gap="8">
-			<Button colorScheme="red" mr={3} onClick={handleDelete} w="24">
+		<Flex alignItems="center" justifyContent="center" mt="20" gap="8">
+			<Button colorScheme="red" onClick={handleDelete} w="24">
 				{t("modal.delete")}
 			</Button>
 			<Button onClick={handleCloseModal} w="24">

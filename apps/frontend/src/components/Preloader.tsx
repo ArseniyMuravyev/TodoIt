@@ -7,7 +7,7 @@ const spin = keyframes`
 
 export const Preloader = () => {
 	return (
-		<Flex flexGrow="1" align="center">
+		<Flex flexGrow="1" alignItems="center" justifyContent="center">
 			<Box
 				as="div"
 				boxSize="74px"

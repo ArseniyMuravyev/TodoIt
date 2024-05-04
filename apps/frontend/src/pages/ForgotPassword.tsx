@@ -42,19 +42,20 @@ const ForgotPassword: FC = () => {
 	};
 
 	return (
-		<Flex justifyContent="center" align="center" p="6">
+		<Flex justifyContent="center" alignItems="center" p="6">
 			<VStack w="100%" spacing="6">
 				<Heading as="h1" pb="6">
 					{t("user.password_recovery")}
 				</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w="50vw">
+					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
 						<EmailInput register={register} errors={errors} />
 						<Button
 							colorScheme="blue"
 							size="md"
 							type="submit"
 							disabled={isSubmitting}
+							w="full"
 						>
 							{isSubmitting ? t("user.submitting") : t("user.reset")}
 						</Button>
