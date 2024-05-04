@@ -112,11 +112,8 @@ class UserService {
 
 	async resetPassword(email: string, newPassword: string, resetCode: string) {
 		const user = await UserModel.findOne({ email });
-		if (!user) {
-			throw ApiError.BadRequestError("Пользователь с такой почтой не найден");
-		}
 
-		if (resetCode !== user.resetCode) {
+		if (resetCode !== user?.resetCode) {
 			throw ApiError.BadRequestError("Неверный код");
 		}
 

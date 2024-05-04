@@ -27,7 +27,14 @@
 		"activation": "Activational link sent to your mail",
 		"delete": "Delete account",
 		"activated": "Your account is activated",
-		"not-activated": "Your accout isn't activated, check your email"
+		"not-activated": "Your accout isn't activated, check your email",
+		"incorrect_password": "The password you entered is incorrect",
+		"incorrect_email": "The email you entered is incorrect",
+		"password_too_short": "The password should be at least 6 characters",
+		"password_required": "The password is required",
+		"email_required": "The email is required",
+		"login_failed": "You entered the wrong email or password",
+		"unexpected_fail": "An unexpected error has occurred"
 	},
 	"navigation": {
 		"home": "Home",
@@ -51,7 +58,8 @@
 	},
 	"success": {
 		"success": "Success",
-		"reset": "A link to reset your password has been sent to your email.",
+		"forgot": "A link to reset your password has been sent to your email.",
+		"reset": "The password has been successsfully reset",
 		"update": "Successfully updated",
 		"delete": "Successfully deleted",
 		"profile": "The user's profile has been successfully updated",

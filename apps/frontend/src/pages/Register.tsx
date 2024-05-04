@@ -1,60 +1,46 @@
-import { Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
-import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
+import { Button, Flex, Heading, Input, Text, VStack } from "@chakra-ui/react";
+import { FC, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { FormInput } from "../components/FormInput";
+import { EmailInput } from "../components/EmailInput";
 import { PasswordInput } from "../components/PasswordInput";
-import { register } from "../features/user/actions";
+import { register as registerUser } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch } from "../store/store";
 
+interface IFormInput {
+	name: string;
+	email: string;
+	password: string;
+}
+
 const Register: FC = () => {
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 	const dispatch = useDispatch();
 	const { t } = useTranslation();
 	const [show, setShow] = useState(false);
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { showSuccess } = useToast();
+	const { showSuccess, showError } = useToast();
 
-	const handleSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+	} = useForm<IFormInput>({});
+
+	const onSubmit: SubmitHandler<IFormInput> = (data) => {
 		if (isSubmitting) {
 			return;
 		}
-		setIsSubmitting(true);
-		dispatch(
-			register({
-				name: name,
-				email: email,
-				password: password,
-			})
-		)
-			.unwrap()
-			.then(() => showSuccess(t("user.activation")));
-		setIsSubmitting(false);
-	};
-
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-
-		switch (name) {
-			case "email":
-				setEmail(value);
-				break;
-			case "password":
-				setPassword(value);
-				break;
-			case "name":
-				setName(value);
-				break;
-			default:
-				break;
+		try {
+			dispatch(registerUser(data))
+				.unwrap()
+				.then(() => showSuccess(t("user.activation")));
+		} catch (error) {
+			showError(t("user.unexpected_fail"));
 		}
 	};
 
-	const handleClick = () => setShow((prev) => !prev);
+	const onClick = () => setShow((prev) => !prev);
 
 	return (
 		<Flex justifyContent="center" alignContent="center" p="6">
@@ -62,34 +48,22 @@ const Register: FC = () => {
 				<Heading as="h3" pb="6">
 					{t("user.registration")}
 				</Heading>
-				<form name="register" onSubmit={handleSubmit}>
-					<VStack spacing="4">
-						<FormInput
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<VStack spacing="4" w="50vw">
+						<Input
 							type="text"
 							placeholder={t("user.name")}
-							onChange={handleInputChange}
-							value={name}
-							name="name"
+							{...register("name", { required: "Поле  имени обязательно" })}
 						/>
-						<FormInput
-							type="email"
-							placeholder="Email"
-							onChange={handleInputChange}
-							value={email}
-							name="email"
-						/>
+						{errors.name && <Text color="red.500">{errors.name.message}</Text>}
+						<EmailInput register={register} errors={errors} />
 						<PasswordInput
-							onChange={handleInputChange}
-							value={password}
-							onClick={handleClick}
+							register={register}
 							show={show}
+							onClick={onClick}
+							errors={errors}
 						/>
-						<Button
-							colorScheme="blue"
-							type="submit"
-							w="50vw"
-							disabled={isSubmitting}
-						>
+						<Button colorScheme="blue" type="submit" disabled={isSubmitting}>
 							{isSubmitting ? t("user.submitting") : t("user.signUp")}
 						</Button>
 					</VStack>

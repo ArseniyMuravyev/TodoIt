@@ -1,37 +1,47 @@
-import { Button, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { ChangeEvent, FC } from "react";
+import { Button, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { FormInput } from "./FormInput";
 
 interface IPasswordInput {
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-	value: string;
+	register: any;
 	onClick: () => void;
 	show: boolean;
+	errors: any;
+	type?: string
 }
 
 export const PasswordInput: FC<IPasswordInput> = ({
-	onChange,
-	value,
+	register,
 	onClick,
 	show,
+	errors,
+	type = "password",
 }) => {
 	const { t } = useTranslation();
 
 	return (
-		<InputGroup>
-			<FormInput
-				onChange={onChange}
-				value={value}
-				name="password"
-				type={show ? "text" : "password"}
-				placeholder={t("user.password")}
-			/>
-			<InputRightElement w="4.5rem">
-				<Button h="1.75rem" size="sm" onClick={onClick}>
-					{show ? "Hide" : "Show"}
-				</Button>
-			</InputRightElement>
-		</InputGroup>
+		<>
+			<InputGroup>
+				<Input
+					type={show ? "text" : "password"}
+					placeholder={t("user.password")}
+					{...register(type, {
+						required: t("user.password_required"),
+						minLength: {
+							value: 6,
+							message: t("user.password_too_short"),
+						},
+					})}
+				/>
+				<InputRightElement w="4.5rem">
+					<Button h="1.75rem" size="sm" onClick={onClick}>
+						{show ? "Hide" : "Show"}
+					</Button>
+				</InputRightElement>
+			</InputGroup>
+			{errors.password && (
+				<Text color="red.500">{errors.password.message}</Text>
+			)}
+		</>
 	);
 };

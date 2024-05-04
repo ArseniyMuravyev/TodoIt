@@ -1,55 +1,54 @@
 import { Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
-import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
+import { FC, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, Navigate } from "react-router-dom";
-import { FormInput } from "../components/FormInput";
+import { EmailInput } from "../components/EmailInput";
 import { PasswordInput } from "../components/PasswordInput";
 import { login } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch, useSelector } from "../store/store";
 
+interface IFormInput {
+	email: string;
+	password: string;
+}
+
 const Login: FC = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 	const dispatch = useDispatch();
 	const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-	const { showError } = useToast();
+	const { showError, showSuccess } = useToast();
 	const { t } = useTranslation();
 	const [show, setShow] = useState(false);
-	const handleClick = () => setShow((prev) => !prev);
-	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const handleSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+	} = useForm<IFormInput>({});
+
+	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
 		if (isSubmitting) {
 			return;
 		}
-		setIsSubmitting(true);
-		if (!email || !password) {
+		if (!data.email || !data.password) {
 			showError(t("error.empty"));
+			return;
 		}
-		dispatch(login({ email, password }));
-		setIsSubmitting(false);
+		try {
+			await dispatch(login(data))
+				.unwrap()
+				.then(() => showSuccess(t("success.success")));
+		} catch (error) {
+			showError(t("user.login_failed"));
+		}
 	};
 
 	if (isAuthenticated) {
 		return <Navigate to={"/"} />;
 	}
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-
-		switch (name) {
-			case "email":
-				setEmail(value);
-				break;
-			case "password":
-				setPassword(value);
-				break;
-			default:
-				break;
-		}
-	};
+	const onClick = () => setShow((prev) => !prev);
 
 	return (
 		<Flex justifyContent="center" align="center" p="6">
@@ -57,21 +56,16 @@ const Login: FC = () => {
 				<Heading as="h1" pb="6">
 					{t("user.entrance")}
 				</Heading>
-				<form onSubmit={handleSubmit}>
-					<VStack spacing="4">
-						<FormInput
-							type="email"
-							placeholder="Email"
-							onChange={handleInputChange}
-							value={email}
-							name="email"
-						/>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<VStack spacing="4" w="50vw">
+						<EmailInput register={register} errors={errors} />
 						<PasswordInput
-							onChange={handleInputChange}
-							value={password}
 							show={show}
-							onClick={handleClick}
+							onClick={onClick}
+							register={register}
+							errors={errors}
 						/>
+
 						<Button
 							colorScheme="blue"
 							w="full"

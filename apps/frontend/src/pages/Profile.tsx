@@ -1,15 +1,19 @@
 import { TUser } from "@arseniy/types";
-import { Box, Button, Flex, Text, VStack } from "@chakra-ui/react";
-import { ChangeEvent, FC, SyntheticEvent, useState } from "react";
+import { Box, Button, Flex, Input, Text, VStack } from "@chakra-ui/react";
+import { FC, SyntheticEvent, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormInput } from "../components/FormInput";
+import { Modal } from "../components/Modal";
 import { ProfileButtos } from "../components/ProfileButtons";
 import { IConfirmDeletion } from "../components/TodoInfo";
 import { deleteUser, logout, updateUser } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { AuthResponse } from "../models/response/AuthResponse";
 import { useDispatch, useSelector } from "../store/store";
-import { Modal } from "../components/Modal";
+
+interface IFormInput {
+	name: string;
+}
 
 const Profile: FC = () => {
 	const dispatch = useDispatch();
@@ -20,15 +24,15 @@ const Profile: FC = () => {
 	const [userName, setUserName] = useState(name);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setUserName(e.target.value);
-	};
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<IFormInput>({});
 
 	const isFormChanged = userName !== name;
 
-	const handleSubmit = (e: SyntheticEvent) => {
-		e.preventDefault();
-
+	const onSubmit: SubmitHandler<IFormInput> = (data) => {
 		if (!id) {
 			showError(t("error.id"));
 			return;
@@ -76,13 +80,11 @@ const Profile: FC = () => {
 
 	return (
 		<Box>
-			<VStack as="form" spacing="4" onSubmit={handleSubmit} mt="8">
-				<FormInput
+			<VStack as="form" spacing="4" onSubmit={handleSubmit(onSubmit)} mt="8">
+				<Input
 					type="text"
 					placeholder={t("user.name")}
-					onChange={handleInputChange}
-					value={userName}
-					name="name"
+					{...register("name", { required: true })}
 				/>
 				<Text fontSize="lg">
 					{user?.isActivated ? t("user.activated") : t("user.not-activated")}

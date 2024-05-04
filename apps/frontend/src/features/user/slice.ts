@@ -1,5 +1,5 @@
 import { TUser } from "@arseniy/types";
-import { SerializedError, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
 	checkAuth,
 	deleteUser,
@@ -12,14 +12,12 @@ import {
 interface UserState {
 	isAuthenticated: boolean;
 	user: TUser | null;
-	error: SerializedError | null;
 	loading: boolean;
 }
 
 const initialState: UserState = {
 	isAuthenticated: false,
 	user: null,
-	error: null,
 	loading: false,
 };
 
@@ -39,7 +37,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(login.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.error;
 			})
 			.addCase(logout.pending, (state) => {
 				state.loading = true;
@@ -51,7 +48,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(logout.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.error;
 			})
 			.addCase(register.fulfilled, (state, action) => {
 				state.loading = false;
@@ -63,7 +59,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(register.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.error;
 			})
 			.addCase(updateUser.pending, (state) => {
 				state.loading = true;
@@ -74,7 +69,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(updateUser.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.error;
 			})
 			.addCase(checkAuth.fulfilled, (state, action) => {
 				state.user = action.payload;
@@ -85,7 +79,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(checkAuth.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.error;
 			})
 			.addCase(deleteUser.pending, (state) => {
 				state.loading = true;
@@ -97,7 +90,6 @@ export const userSlice = createSlice({
 			})
 			.addCase(deleteUser.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.error;
 			});
 	},
 });
