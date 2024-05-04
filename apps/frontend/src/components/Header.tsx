@@ -44,12 +44,7 @@ export const Header: FC = () => {
 						/>
 					)}
 				</Box>
-				<Flex
-					gap="8"
-					justifyContent="center"
-					alignItems="center"
-					display={{ base: "none", lg: "flex" }}
-				>
+				<Flex gap="8" align="center" display={{ base: "none", lg: "flex" }}>
 					<UserButton />
 					<ColorModeSwitcher />
 					<Translator />

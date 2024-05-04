@@ -1,5 +1,5 @@
 import { TUser } from "@arseniy/types";
-import { Box, Button, Flex, Input, Text, VStack } from "@chakra-ui/react";
+import { Button, Flex, Input, Text, VStack } from "@chakra-ui/react";
 import { FC, SyntheticEvent, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -79,8 +79,14 @@ const Profile: FC = () => {
 	};
 
 	return (
-		<Box>
-			<VStack as="form" spacing="4" onSubmit={handleSubmit(onSubmit)} mt="8">
+		<Flex justifyContent="center">
+			<VStack
+				as="form"
+				spacing="4"
+				onSubmit={handleSubmit(onSubmit)}
+				mt="8"
+				w="50vw"
+			>
 				<Input
 					type="text"
 					placeholder={t("user.name")}
@@ -108,7 +114,7 @@ const Profile: FC = () => {
 					</Modal>
 				)}
 			</VStack>
-		</Box>
+		</Flex>
 	);
 };
 
@@ -118,7 +124,7 @@ const ConfirmUserDeletion: FC<IConfirmDeletion> = ({
 }) => {
 	const { t } = useTranslation();
 	return (
-		<Flex justifyContent="center" alignItems="center" mt="28" gap="8">
+		<Flex align="center" mt="28" gap="8">
 			<Button colorScheme="red" mr={3} onClick={handleDelete} w="24">
 				{t("modal.delete")}
 			</Button>

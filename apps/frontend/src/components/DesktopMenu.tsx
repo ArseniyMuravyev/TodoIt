@@ -11,8 +11,7 @@ export const DesktopMenu: FC = () => {
 				to="/"
 				style={({ isActive }) => {
 					return {
-						color: isActive ? "gray" : "",
-						textDecoration: isActive ? "underline" : "none",
+						color: isActive ? "gray.500" : "",
 					};
 				}}
 			>
@@ -22,8 +21,7 @@ export const DesktopMenu: FC = () => {
 				to="/todos"
 				style={({ isActive }) => {
 					return {
-						color: isActive ? "gray" : "",
-						textDecoration: isActive ? "underline" : "none",
+						color: isActive ? "gray.500" : "",
 					};
 				}}
 				data-cy='todos'

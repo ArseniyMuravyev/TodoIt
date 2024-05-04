@@ -141,7 +141,7 @@ const ConfirmTodoDeletion: FC<IConfirmDeletion> = ({
 }) => {
 	const { t } = useTranslation();
 	return (
-		<Flex justifyContent="center" alignItems="center" mt="28" gap="8">
+		<Flex align='center' mt="28" gap="8">
 			<Button colorScheme="red" mr={3} onClick={handleDelete} w="24">
 				{t("modal.delete")}
 			</Button>

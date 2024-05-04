@@ -18,6 +18,12 @@ const generateTokensFromDto = async (user: any) => {
 	};
 };
 
+const saveUserDto = async (user: any) => {
+	await user.save();
+	const userDto = new UserDto(user);
+	return userDto;
+};
+
 class UserService {
 	async registration(name: string, email: string, password: string) {
 		const hashedPassword = await bcrypt.hash(password, 3);
@@ -102,12 +108,8 @@ class UserService {
 		}
 
 		user!.resetCode = resetCode;
-		await user.save();
-
-		const userDto = new UserDto(user);
-
 		await mailService.sendResetPassword(email, resetCode);
-		return userDto;
+		return saveUserDto(user);
 	}
 
 	async resetPassword(email: string, newPassword: string, resetCode: string) {
@@ -119,10 +121,7 @@ class UserService {
 
 		const hashedNewPassword = await bcrypt.hash(newPassword, 3);
 		user.password = hashedNewPassword;
-		await user.save();
-
-		const userDto = new UserDto(user);
-		return userDto;
+		return saveUserDto(user);
 	}
 
 	async updateUser(id: string, name: string) {
@@ -131,9 +130,7 @@ class UserService {
 			throw ApiError.BadRequestError("Пользователь не найден");
 		}
 		user.name = name;
-		await user.save();
-		const userDto = new UserDto(user);
-		return userDto;
+		return saveUserDto(user);
 	}
 
 	async deleteUser(id: string) {

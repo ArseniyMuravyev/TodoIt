@@ -16,8 +16,7 @@ const ErrorPage = () => {
 	return (
 		<Flex
 			flexDirection="column"
-			alignItems="center"
-			justifyContent="center"
+			align='center'
 			w="100%"
 			h="100vh"
 			gap="12"

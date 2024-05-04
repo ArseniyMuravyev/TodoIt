@@ -78,8 +78,7 @@ const Login: FC = () => {
 				</form>
 				<Flex
 					mt="2"
-					justifyContent="center"
-					alignItems="center"
+					align='center'
 					gap="2"
 					flexDirection="column"
 				>

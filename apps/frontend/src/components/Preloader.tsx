@@ -1,4 +1,4 @@
-import { Box, keyframes } from "@chakra-ui/react";
+import { Box, Flex, keyframes } from "@chakra-ui/react";
 
 const spin = keyframes`
   from { transform: rotate(0deg); }
@@ -7,12 +7,7 @@ const spin = keyframes`
 
 export const Preloader = () => {
 	return (
-		<Box
-			flexGrow="1"
-			display="flex"
-			alignItems="center"
-			justifyContent="center"
-		>
+		<Flex flexGrow="1" align="center">
 			<Box
 				as="div"
 				boxSize="74px"
@@ -23,6 +18,6 @@ export const Preloader = () => {
 				m="auto"
 				animation={`${spin} 0.75s infinite linear`}
 			/>
-		</Box>
+		</Flex>
 	);
 };
