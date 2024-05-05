@@ -6,19 +6,23 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { FC } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-interface FormValues {
-	[password: string]: string;
+export interface FormValues {
+	email: string;
+	password: string;
+	name?: string;
+	newPassword?: string;
+	resetCode?: string;
 }
 
 interface IPasswordInput {
 	register: UseFormRegister<FormValues>;
 	onClick: () => void;
 	show: boolean;
-	errors: any;
-	type?: string;
+	errors: FieldErrors<FormValues>;
+	type?: keyof FormValues;
 }
 
 export const PasswordInput: FC<IPasswordInput> = ({

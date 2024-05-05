@@ -11,7 +11,7 @@ const Todos: FC = () => {
 
 	useEffect(() => {
 		dispatch(fetchTodos());
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<>

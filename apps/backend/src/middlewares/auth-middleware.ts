@@ -3,6 +3,7 @@ import { UserDto } from "../dtos/user-dto";
 import { ApiError } from "../exceptions/api-error";
 import { UserModel } from "../models/user-model";
 import { tokenService } from "../services/token-service";
+import { TUser } from "@arseniy/types";
 
 export const authMiddleware = async (
 	req: Request,
@@ -22,7 +23,7 @@ export const authMiddleware = async (
 			return next(ApiError.UnauthorizedError());
 		}
 
-		const userData = tokenService.validateAccessToken(accessToken) as any;
+		const userData = tokenService.validateAccessToken(accessToken) as TUser;
 
 		if (!userData) {
 			return next(ApiError.UnauthorizedError());

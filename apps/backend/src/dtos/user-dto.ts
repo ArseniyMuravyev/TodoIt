@@ -9,7 +9,7 @@ export class UserDto {
 	constructor(model: IUserSchema) {
 		this.name = model.name;
 		this.email = model.email;
-		this.id = model._id!;
+		this.id = model._id ? model._id : "";
 		this.isActivated = model.isActivated;
 	}
 }

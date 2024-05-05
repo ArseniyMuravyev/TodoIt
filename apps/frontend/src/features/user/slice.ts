@@ -65,7 +65,9 @@ export const userSlice = createSlice({
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
 				state.loading = false;
-				state.user!.name = action.payload.name;
+				if (state.user) {
+					state.user.name = action.payload.name;
+				}
 			})
 			.addCase(updateUser.rejected, (state, action) => {
 				state.loading = false;

@@ -109,7 +109,9 @@ class UserController {
 		try {
 			const activationLink = req.params.link;
 			await userService.activate(activationLink);
-			return res.redirect(process.env.CLIENT_URL!);
+			if (process.env.CLIENT_URL) {
+				return res.redirect(process.env.CLIENT_URL);
+			}
 		} catch (error) {
 			next(error);
 		}
@@ -119,7 +121,7 @@ class UserController {
 		try {
 			const { refreshToken } = req.cookies;
 			const userData = await userService.refresh(refreshToken);
-			res.cookie("refreshToken", userData.refreshToken, {
+			res.cookie("refreshToken", userData?.refreshToken, {
 				maxAge: 30 * 24 * 60 * 60 * 1000,
 				httpOnly: true,
 			});

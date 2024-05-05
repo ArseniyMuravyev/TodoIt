@@ -1,15 +1,12 @@
 import { Input, Text } from "@chakra-ui/react";
 import { FC } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-
-interface FormValues {
-	email: string;
-}
+import { FormValues } from "./PasswordInput";
 
 interface IEmailInput {
 	register: UseFormRegister<FormValues>;
-	errors: any;
+	errors: FieldErrors<FormValues>;
 }
 
 export const EmailInput: FC<IEmailInput> = ({ register, errors }) => {

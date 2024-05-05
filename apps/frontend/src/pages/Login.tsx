@@ -4,15 +4,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, Navigate } from "react-router-dom";
 import { EmailInput } from "../components/EmailInput";
-import { PasswordInput } from "../components/PasswordInput";
+import { FormValues, PasswordInput } from "../components/PasswordInput";
 import { login } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch, useSelector } from "../store/store";
-
-interface IFormInput {
-	email: string;
-	password: string;
-}
 
 const Login: FC = () => {
 	const dispatch = useDispatch();
@@ -25,9 +20,9 @@ const Login: FC = () => {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<IFormInput>({});
+	} = useForm<FormValues>({});
 
-	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+	const onSubmit: SubmitHandler<FormValues> = async (data) => {
 		if (isSubmitting) {
 			return;
 		}

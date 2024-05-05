@@ -73,7 +73,6 @@ export const CreateTodoInput: FC<ICreateTodoInput> = ({
 						<Controller
 							control={control}
 							name="date"
-							rules={{ required: "Date is required" }}
 							render={({ field }) => (
 								<DatePicker
 									date={field.value}

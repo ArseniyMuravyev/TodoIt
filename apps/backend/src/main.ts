@@ -8,6 +8,9 @@ import { errorMiddleware } from "./middlewares/error-middleware";
 import { router as userRoute } from "./routes/auth-route";
 import { router as todoRoute } from "./routes/todo-route";
 
+export const accessSecret = process.env.JWT_ACCESS_SECRET || "";
+export const refreshSecret = process.env.JWT_REFRESH_SECRET || "";
+
 const swaggerDocument = YAML.load("./swagger.yml");
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 5000;

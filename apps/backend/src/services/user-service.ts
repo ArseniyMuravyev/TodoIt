@@ -1,3 +1,4 @@
+import { TUser } from "@arseniy/types";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { UserDto } from "../dtos/user-dto";
@@ -76,14 +77,16 @@ class UserService {
 		if (!refreshToken) {
 			throw ApiError.UnauthorizedError();
 		}
-		const userData = tokenService.validateRefreshToken(refreshToken) as any;
+		const userData = tokenService.validateRefreshToken(refreshToken) as TUser;
 		const tokenFromDb = await tokenService.findToken(refreshToken);
 		if (!userData || !tokenFromDb) {
 			throw ApiError.UnauthorizedError();
 		}
 
 		const user = await UserModel.findById(userData.id);
-		return generateTokensFromDto(user!);
+		if (user) {
+			return generateTokensFromDto(user);
+		}
 	}
 
 	async activate(activationLink: string) {
@@ -107,7 +110,7 @@ class UserService {
 			throw ApiError.BadRequestError("Пользователь с такой почтой не найден");
 		}
 
-		user!.resetCode = resetCode;
+		user.resetCode = resetCode;
 		await mailService.sendResetPassword(email, resetCode);
 		return saveUserDto(user);
 	}

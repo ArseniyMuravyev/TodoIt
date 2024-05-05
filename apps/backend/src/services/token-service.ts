@@ -1,22 +1,15 @@
 import jwt from "jsonwebtoken";
+import { accessSecret, refreshSecret } from "../main";
 import { TokenModel } from "../models/token-model";
 
 class TokenService {
-	generateToken(payload: object, key: string | undefined, expiresIn: string) {
-		return jwt.sign(payload, key!, { expiresIn });
+	generateToken(payload: object, key: string, expiresIn: string) {
+		return jwt.sign(payload, key, { expiresIn });
 	}
 
 	generateTokens(payload: object) {
-		const accessToken = this.generateToken(
-			payload,
-			process.env.JWT_ACCESS_SECRET,
-			"15m"
-		);
-		const refreshToken = this.generateToken(
-			payload,
-			process.env.JWT_REFRESH_SECRET,
-			"7d"
-		);
+		const accessToken = this.generateToken(payload, accessSecret, "15m");
+		const refreshToken = this.generateToken(payload, refreshSecret, "7d");
 
 		return {
 			accessToken,
@@ -46,7 +39,7 @@ class TokenService {
 
 	validateAccessToken(token: string) {
 		try {
-			const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET!);
+			const userData = jwt.verify(token, accessSecret);
 			return userData;
 		} catch (error) {
 			return null;
@@ -55,7 +48,7 @@ class TokenService {
 
 	validateRefreshToken(token: string) {
 		try {
-			const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET!);
+			const userData = jwt.verify(token, refreshSecret);
 			return userData;
 		} catch (error) {
 			return null;

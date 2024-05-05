@@ -3,16 +3,10 @@ import { FC, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { PasswordInput } from "../components/PasswordInput";
-import { resetPassword } from "../features/user/actions";
+import { FormValues, PasswordInput } from "../components/PasswordInput";
+import { TResetPasswordData, resetPassword } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch } from "../store/store";
-
-interface IFormInput {
-	email: string;
-	newPassword: string;
-	resetCode: string;
-}
 
 const ResetPassword: FC = () => {
 	const navigate = useNavigate();
@@ -24,26 +18,36 @@ const ResetPassword: FC = () => {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<IFormInput>({});
+	} = useForm<FormValues>({});
 
 	const onClick = () => setShow((prev) => !prev);
 
-	const onSubmit: SubmitHandler<IFormInput> = (data) => {
+	const onSubmit: SubmitHandler<FormValues> = (data) => {
 		if (isSubmitting) {
 			return;
 		}
-		data.email = localStorage.getItem("resetEmail")!;
 
-		try {
-			dispatch(resetPassword(data))
-				.unwrap()
-				.then(() => {
-					localStorage.removeItem("resetEmail");
-					showSuccess(t("success.reset"));
-					navigate("/login");
-				});
-		} catch (error) {
-			showError(t("error.reset"));
+		const email = localStorage.getItem("resetEmail");
+		if (email) {
+			const resetData = {
+				...data,
+				email,
+			};
+
+			try {
+				dispatch(resetPassword(resetData as TResetPasswordData))
+					.unwrap()
+					.then(() => {
+						localStorage.removeItem("resetEmail");
+						showSuccess(t("success.reset"));
+						navigate("/login");
+					});
+			} catch (error) {
+				showError(t("error.reset"));
+			}
+		} else {
+			showError(t("error.missingEmail"));
+			navigate("/forgot-password", { replace: true });
 		}
 	};
 

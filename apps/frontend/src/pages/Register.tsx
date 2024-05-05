@@ -4,16 +4,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { EmailInput } from "../components/EmailInput";
-import { PasswordInput } from "../components/PasswordInput";
-import { register as registerUser } from "../features/user/actions";
+import { FormValues, PasswordInput } from "../components/PasswordInput";
+import { TRegisterData, register as registerUser } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch } from "../store/store";
-
-interface IFormInput {
-	name: string;
-	email: string;
-	password: string;
-}
 
 const Register: FC = () => {
 	const dispatch = useDispatch();
@@ -25,14 +19,14 @@ const Register: FC = () => {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<IFormInput>({});
+	} = useForm<FormValues>({});
 
-	const onSubmit: SubmitHandler<IFormInput> = (data) => {
+	const onSubmit: SubmitHandler<FormValues> = (data) => {
 		if (isSubmitting) {
 			return;
 		}
 		try {
-			dispatch(registerUser(data))
+			dispatch(registerUser(data as TRegisterData))
 				.unwrap()
 				.then(() => showSuccess(t("user.activation")));
 		} catch (error) {

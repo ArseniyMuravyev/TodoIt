@@ -1,11 +1,4 @@
-import {
-	Button,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-	Text,
-} from "@chakra-ui/react";
+import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { ChevronDownIcon, Languages } from "lucide-react";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,15 +28,15 @@ export const Translator: FC = () => {
 					<MenuList>
 						<MenuItem onClick={handleChangeRussianLanguage}>
 							Русский&nbsp;
-							<Text as="span" role="img" aria-label="flag of Russia">
+							<span role="img" aria-label="flag of Russia">
 								🇷🇺
-							</Text>
+							</span>
 						</MenuItem>
 						<MenuItem onClick={handleChangeEnglishLanguage}>
 							English&nbsp;
-							<Text as="span" role="img" aria-label="flag of United Kingdom">
+							<span role="img" aria-label="flag of United Kingdom">
 								🇬🇧
-							</Text>
+							</span>
 						</MenuItem>
 					</MenuList>
 				</>
