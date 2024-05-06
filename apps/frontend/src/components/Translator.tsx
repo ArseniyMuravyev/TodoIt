@@ -22,6 +22,7 @@ export const Translator: FC = () => {
 						isActive={isOpen}
 						as={Button}
 						rightIcon={<ChevronDownIcon />}
+						colorScheme="pink"
 					>
 						<Languages />
 					</MenuButton>

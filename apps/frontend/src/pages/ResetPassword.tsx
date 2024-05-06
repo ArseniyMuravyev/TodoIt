@@ -7,6 +7,7 @@ import { FormValues, PasswordInput } from "../components/PasswordInput";
 import { TResetPasswordData, resetPassword } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch } from "../store/store";
+import { responsiveWidths } from "../styles";
 
 const ResetPassword: FC = () => {
 	const navigate = useNavigate();
@@ -60,9 +61,9 @@ const ResetPassword: FC = () => {
 	return (
 		<Box p="6" rounded="md" boxShadow="lg">
 			<VStack spacing="6">
-				<Heading size="lg">{t("user.password_recovery")}</Heading>
+				<Heading as="h1">{t("user.password_recovery")}</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
+					<VStack spacing="4" w={responsiveWidths}>
 						<PasswordInput
 							onClick={onClick}
 							show={show}

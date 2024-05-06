@@ -5,9 +5,13 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { EmailInput } from "../components/EmailInput";
 import { FormValues, PasswordInput } from "../components/PasswordInput";
-import { TRegisterData, register as registerUser } from "../features/user/actions";
+import {
+	TRegisterData,
+	register as registerUser,
+} from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch } from "../store/store";
+import { responsiveWidths } from "../styles";
 
 const Register: FC = () => {
 	const dispatch = useDispatch();
@@ -39,11 +43,9 @@ const Register: FC = () => {
 	return (
 		<Flex justifyContent="center" alignContent="center" p="6">
 			<VStack spacing="6" w="100%">
-				<Heading as="h3" pb="6">
-					{t("user.registration")}
-				</Heading>
+				<Heading as="h1">{t("user.registration")}</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
+					<VStack spacing="4" w={responsiveWidths}>
 						<Input
 							type="text"
 							placeholder={t("user.name")}

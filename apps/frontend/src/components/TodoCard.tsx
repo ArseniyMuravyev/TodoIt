@@ -21,34 +21,36 @@ export const TodoCard: FC<ITodoCard> = ({ todo }) => {
 	};
 
 	return (
-		<ListItem w="100%" isTruncated>
-			<Flex alignItems="center" gap="2" mb="2">
-				<Button
-					mt="1"
-					bg="transparent"
-					size="2xs"
-					onClick={handleClick}
-					borderRadius="50%"
-					onMouseEnter={() => setIsHovered(true)}
-					onMouseLeave={() => setIsHovered(false)}
-					_hover={{ bg: "transparent" }}
-				>
-					{isHovered ? <Check /> : <Circle />}
-				</Button>
-				<Link
-					to={`/todos/${todo._id}`}
-					state={{ backgroundLocation: location }}
-				>
-					<Text
-						fontSize="xl"
-						data-cy="todo"
-						style={{
-							textDecoration: todo.completed ? "line-through" : "none",
-						}}
+		<ListItem w={{ base: "80vw", md: "100%" }} isTruncated>
+			<Flex alignItems="center" gap="2" mb="2" justifyContent="space-between">
+				<Flex gap="2">
+					<Button
+						mt="1"
+						bg="transparent"
+						size="xs"
+						onClick={handleClick}
+						borderRadius="50%"
+						onMouseEnter={() => setIsHovered(true)}
+						onMouseLeave={() => setIsHovered(false)}
+						_hover={{ bg: "transparent" }}
 					>
-						{todo.title}
-					</Text>
-				</Link>
+						{isHovered ? <Check /> : <Circle />}
+					</Button>
+					<Link
+						to={`/todos/${todo._id}`}
+						state={{ backgroundLocation: location }}
+					>
+						<Text
+							fontSize="xl"
+							data-cy="todo"
+							style={{
+								textDecoration: todo.completed ? "line-through" : "none",
+							}}
+						>
+							{todo.title}
+						</Text>
+					</Link>
+				</Flex>
 				{todo.date && (
 					<Text
 						mt="1"

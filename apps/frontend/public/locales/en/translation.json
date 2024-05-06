@@ -34,7 +34,8 @@
 		"password_required": "The password is required",
 		"email_required": "The email is required",
 		"login_failed": "You entered the wrong email or password",
-		"unexpected_fail": "An unexpected error has occurred"
+		"unexpected_fail": "An unexpected error has occurred",
+		"profile": "Your profile"
 	},
 	"navigation": {
 		"home": "Home",
@@ -46,7 +47,8 @@
 		"today": "Today",
 		"this_week": "This week",
 		"task_name": "Todo's name",
-		"completed": "Completed"
+		"completed": "Completed",
+		"first_todo": "Let's create your first todo!"
 	},
 	"modal": {
 		"status": "Status: ",
@@ -70,6 +72,7 @@
 		"unexpected": "Unexpected error",
 		"id": "The user ID could not be determined",
 		"profile": "An error occurred while updating the profile",
-		"empty": "Email and password should not be empty"
+		"empty": "Email and password should not be empty",
+		"home": "Return to home"
 	}
 }

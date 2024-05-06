@@ -1,5 +1,6 @@
-import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import { FC } from "react";
+import { responsivePadding } from "../styles";
 import { GithubIcon } from "./GithubIcon";
 
 export const Footer: FC = () => {
@@ -10,15 +11,15 @@ export const Footer: FC = () => {
 			bottom="0"
 			left="0"
 			w="100%"
-			px="12"
 			py="6"
+			px={responsivePadding}
 			display="flex"
 			justifyContent="space-between"
 			alignItems="center"
 		>
-			<Heading as="h2" size="md">
+			<Text fontSize="xl" fontWeight="bold">
 				Just TodoIt!
-			</Heading>
+			</Text>
 			<Link href="https://github.com/ArseniyMuravyev" isExternal>
 				<Flex gap="2" alignItems="center">
 					<GithubIcon />

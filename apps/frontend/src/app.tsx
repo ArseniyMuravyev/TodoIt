@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { checkAuth } from "./features/user/actions";
 import { useDispatch } from "./store/store";
+import { responsivePadding } from "./styles";
 
 export const App = () => {
 	const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export const App = () => {
 	}, [dispatch]);
 
 	return (
-		<Box minH="100vh" px={{ base: 6, md: 12 }}>
+		<Box minH="100vh" px={responsivePadding}>
 			<Header />
 			<Outlet />
 			<Footer />

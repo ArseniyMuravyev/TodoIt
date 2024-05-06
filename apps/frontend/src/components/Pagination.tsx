@@ -40,7 +40,7 @@ export const Pagination: FC<PaginationProps> = ({
 
 	return (
 		<Flex
-			align='center'
+			align="center"
 			mt="4"
 			position="fixed"
 			bottom="10%"

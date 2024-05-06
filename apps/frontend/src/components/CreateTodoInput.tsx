@@ -5,6 +5,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { createTodo } from "../features/todo/actions";
 import { useDispatch } from "../store/store";
+import { responsiveDirection } from "../styles";
 import { DatePicker } from "./DatePicker";
 
 interface ICreateTodoInput {
@@ -58,7 +59,7 @@ export const CreateTodoInput: FC<ICreateTodoInput> = ({
 				<Flex
 					gap="4"
 					h={{ base: "100%", md: "10" }}
-					flexDirection={{ base: "column", md: "row" }}
+					flexDirection={responsiveDirection}
 				>
 					<Input
 						type="text"

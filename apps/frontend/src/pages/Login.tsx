@@ -8,6 +8,7 @@ import { FormValues, PasswordInput } from "../components/PasswordInput";
 import { login } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch, useSelector } from "../store/store";
+import { desktopDisplay, responsiveWidths } from "../styles";
 
 const Login: FC = () => {
 	const dispatch = useDispatch();
@@ -48,11 +49,9 @@ const Login: FC = () => {
 	return (
 		<Flex justifyContent="center" alignItems="center" p="6">
 			<VStack spacing="6" w="100%">
-				<Heading as="h1" pb="6">
-					{t("user.entrance")}
-				</Heading>
+				<Heading as="h1">{t("user.entrance")}</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
+					<VStack spacing="4" w={responsiveWidths}>
 						<EmailInput register={register} errors={errors} />
 						<PasswordInput
 							show={show}
@@ -79,17 +78,13 @@ const Login: FC = () => {
 					flexDirection={{ base: "row", md: "column" }}
 				>
 					<Flex gap="2">
-						<Text display={{ base: "none", md: "flex" }}>
-							{t("user.new_user")}
-						</Text>
+						<Text display={desktopDisplay}>{t("user.new_user")}</Text>
 						<Link to="/register">
 							<Text color="blue.500">{t("user.signUp")}</Text>
 						</Link>
 					</Flex>
 					<Flex gap="2">
-						<Text display={{ base: "none", md: "flex" }}>
-							{t("user.forgot_password")}
-						</Text>
+						<Text display={desktopDisplay}>{t("user.forgot_password")}</Text>
 						<Link to="/forgot-password">
 							<Text color="blue.500">{t("user.reset_password")}</Text>
 						</Link>

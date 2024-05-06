@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { Menu, X } from "lucide-react";
 import { FC } from "react";
+import { desktopDisplay, mobileDisplay, responsivePadding } from "../styles";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import { DesktopMenu } from "./DesktopMenu";
 import { Logo } from "./Logo";
@@ -19,15 +20,15 @@ export const Header: FC = () => {
 	const { colorMode } = useColorMode();
 
 	return (
-		<Box as="header" px="4">
+		<Box as="header" px={responsivePadding}>
 			<Flex
-				justifyContent={{ base: "space-evenly", lg: "space-between" }}
+				justifyContent={{ base: "space-evenly", md: "space-between" }}
 				alignItems="center"
 				maxH="20"
 			>
 				<Logo />
 				<IconButton
-					display={{ base: "flex", lg: "none" }}
+					display={mobileDisplay}
 					onClick={onToggle}
 					icon={isOpen ? <X /> : <Menu />}
 					variant={"outline"}
@@ -45,10 +46,10 @@ export const Header: FC = () => {
 					)}
 				</Box>
 				<Flex
-					gap="8"
+					gap="4"
 					alignItems="center"
 					justifyContent="center"
-					display={{ base: "none", lg: "flex" }}
+					display={desktopDisplay}
 				>
 					<UserButton />
 					<ColorModeSwitcher />

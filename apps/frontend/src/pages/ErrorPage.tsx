@@ -1,6 +1,6 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useRouteError } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 type ErrorResponse = {
 	data: unknown;
@@ -16,16 +16,20 @@ const ErrorPage = () => {
 	return (
 		<Flex
 			flexDirection="column"
-			align='center'
+			justifyContent="center"
+			alignItems="center"
 			w="100%"
 			h="100vh"
 			gap="12"
 		>
-			<Heading>{t("home.error_title")}</Heading>
+			<Heading as="h1">{t("home.error_title")}</Heading>
 			<Text>{t("home.error_description")}</Text>
 			<Text color="gray.600" as="i">
 				{error.statusText}
 			</Text>
+			<Link to="/">
+				<Button colorScheme="teal">{t("error.home")}</Button>
+			</Link>
 		</Flex>
 	);
 };

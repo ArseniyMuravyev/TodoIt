@@ -1,5 +1,5 @@
 import { ITodo } from "@arseniy/types";
-import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import { Check, Pencil, Save, Trash2, X } from "lucide-react";
 import { ChangeEvent, FC, MouseEventHandler, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,7 @@ import {
 } from "../features/todo/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch, useSelector } from "../store/store";
+import { buttonSize, responsiveDirection } from "../styles";
 import { formatDate } from "../utils/helpers";
 import { Modal } from "./Modal";
 
@@ -92,11 +93,15 @@ export const TodoInfo: FC = () => {
 					placeholder={t("todos.task_name")}
 				/>
 			) : (
-				<Heading as="h3" size="md">
-					{todo?.title}
-				</Heading>
+				<Text fontSize="md">{todo?.title}</Text>
 			)}
-			<Flex justifyContent="space-between" mt="20" alignItems="center">
+			<Flex
+				justifyContent="space-between"
+				mt={{ base: "8", md: "20" }}
+				alignItems="center"
+				flexDirection={responsiveDirection}
+				gap={{ base: "2", md: "0" }}
+			>
 				<Text w="40">
 					{t("modal.status")}
 					{todo?.completed ? t("modal.done") : t("modal.not_done")}
@@ -105,21 +110,36 @@ export const TodoInfo: FC = () => {
 				<Button
 					onClick={handleComplete}
 					colorScheme={todo?.completed ? "orange" : "green"}
-					w="10"
+					w={buttonSize}
 					size="sm"
 				>
 					{todo?.completed ? <X /> : <Check />}
 				</Button>
 				{isEditing ? (
-					<Button onClick={handleSave} colorScheme="blue" size="sm" w="10">
+					<Button
+						onClick={handleSave}
+						colorScheme="blue"
+						size="sm"
+						w={buttonSize}
+					>
 						<Save />
 					</Button>
 				) : (
-					<Button onClick={toggleEditing} colorScheme="yellow" size="sm" w="10">
+					<Button
+						onClick={toggleEditing}
+						colorScheme="yellow"
+						size="sm"
+						w={buttonSize}
+					>
 						<Pencil />
 					</Button>
 				)}
-				<Button onClick={handleOpenModal} colorScheme="red" w="10" size="sm">
+				<Button
+					onClick={handleOpenModal}
+					colorScheme="red"
+					w={buttonSize}
+					size="sm"
+				>
 					<Trash2 />
 				</Button>
 				{isDeleteModalOpen && (
@@ -141,7 +161,7 @@ const ConfirmTodoDeletion: FC<IConfirmDeletion> = ({
 }) => {
 	const { t } = useTranslation();
 	return (
-		<Flex align='center' mt="28" gap="8">
+		<Flex alignItems="center" justifyContent="center" mt="28" gap="8">
 			<Button colorScheme="red" mr={3} onClick={handleDelete} w="24">
 				{t("modal.delete")}
 			</Button>

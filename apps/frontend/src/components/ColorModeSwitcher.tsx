@@ -1,16 +1,32 @@
-import { Button, useColorMode } from "@chakra-ui/react";
+import { IconButton, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { FC } from "react";
 
+const MotionIconButton = motion(IconButton);
+
 export const ColorModeSwitcher: FC = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
-	const isLight = colorMode === "light";
+	const switchIcon =
+		colorMode === "light" ? <Moon size="20" /> : <Sun size="20" />;
+
 	return (
-		<Button
+		<MotionIconButton
+			aria-label="Toggle theme"
 			onClick={toggleColorMode}
-			colorScheme={isLight ? "purple" : "orange"}
-		>
-			{isLight ? <Moon size="20" /> : <Sun size="20" />}
-		</Button>
+			colorScheme={useColorModeValue("purple", "orange")}
+			icon={
+				<AnimatePresence>
+					<motion.div
+						key={colorMode}
+						initial={{ y: 20, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						transition={{ duration: 0.3 }}
+					>
+						{switchIcon}
+					</motion.div>
+				</AnimatePresence>
+			}
+		/>
 	);
 };

@@ -1,5 +1,5 @@
 import { TUser } from "@arseniy/types";
-import { Button, Flex, Input, Text, VStack } from "@chakra-ui/react";
+import { Button, Flex, Heading, Input, Text, VStack } from "@chakra-ui/react";
 import { FC, SyntheticEvent, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,7 @@ import { IConfirmDeletion } from "../components/TodoInfo";
 import { deleteUser, logout, updateUser } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch, useSelector } from "../store/store";
+import { Section, responsiveWidths } from "../styles";
 
 interface IFormInput {
 	name: string;
@@ -85,52 +86,57 @@ const Profile: FC = () => {
 	};
 
 	return (
-		<Flex justifyContent="center">
-			<VStack
-				as="form"
-				spacing="4"
-				onSubmit={handleSubmit(onSubmit)}
-				mt="8"
-				w={{ base: "80vw", md: "50vw" }}
-			>
-				<Input
-					type="text"
-					placeholder={t("user.name")}
-					{...register("name", { required: true })}
-				/>
-				<Text fontSize="md" textAlign="center">
-					{user?.isActivated ? t("user.activated") : t("user.not-activated")}
-				</Text>
+		<Section delay={0.2}>
+			<Heading as="h1" textAlign="center">
+				{t("user.profile")}
+			</Heading>
+			<Flex justifyContent="center">
+				<VStack
+					as="form"
+					spacing="4"
+					onSubmit={handleSubmit(onSubmit)}
+					mt="8"
+					w={responsiveWidths}
+				>
+					<Input
+						type="text"
+						placeholder={t("user.name")}
+						{...register("name", { required: true })}
+					/>
+					<Text fontSize="md" textAlign="center">
+						{user?.isActivated ? t("user.activated") : t("user.not-activated")}
+					</Text>
 
-				{isDirty && <ProfileButtos handleCancel={handleCancel} />}
-				<Flex gap="4">
-					<Button
-						variant="link"
-						colorScheme="blue"
-						onClick={handleLogout}
-						w="32"
-					>
-						{t("user.logout")}
-					</Button>
-					<Button
-						variant="link"
-						colorScheme="red"
-						onClick={handleOpenModal}
-						w="32"
-					>
-						{t("user.delete")}
-					</Button>
-				</Flex>
-				{isDeleteModalOpen && (
-					<Modal title={t("modal.user_title")} handleClose={handleCloseModal}>
-						<ConfirmUserDeletion
-							handleDelete={handleDelete}
-							handleCloseModal={handleCloseModal}
-						/>
-					</Modal>
-				)}
-			</VStack>
-		</Flex>
+					{isDirty && <ProfileButtos handleCancel={handleCancel} />}
+					<Flex gap="4">
+						<Button
+							variant="link"
+							colorScheme="blue"
+							onClick={handleLogout}
+							w="32"
+						>
+							{t("user.logout")}
+						</Button>
+						<Button
+							variant="link"
+							colorScheme="red"
+							onClick={handleOpenModal}
+							w="32"
+						>
+							{t("user.delete")}
+						</Button>
+					</Flex>
+					{isDeleteModalOpen && (
+						<Modal title={t("modal.user_title")} handleClose={handleCloseModal}>
+							<ConfirmUserDeletion
+								handleDelete={handleDelete}
+								handleCloseModal={handleCloseModal}
+							/>
+						</Modal>
+					)}
+				</VStack>
+			</Flex>
+		</Section>
 	);
 };
 

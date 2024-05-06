@@ -4,13 +4,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { EmailInput } from "../components/EmailInput";
+import { FormValues } from "../components/PasswordInput";
 import { forgotPassword } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch } from "../store/store";
-
-interface IFormInput {
-	email: string;
-}
+import { responsiveWidths } from "../styles";
 
 const ForgotPassword: FC = () => {
 	const dispatch = useDispatch();
@@ -22,9 +20,9 @@ const ForgotPassword: FC = () => {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-	} = useForm<IFormInput>({});
+	} = useForm<FormValues>({});
 
-	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+	const onSubmit: SubmitHandler<FormValues> = async (data) => {
 		if (isSubmitting) {
 			return;
 		}
@@ -44,15 +42,12 @@ const ForgotPassword: FC = () => {
 	return (
 		<Flex justifyContent="center" alignItems="center" p="6">
 			<VStack w="100%" spacing="6">
-				<Heading as="h1" pb="6">
-					{t("user.password_recovery")}
-				</Heading>
+				<Heading as="h1">{t("user.password_recovery")}</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<VStack spacing="4" w={{ base: "80vw", md: "50vw" }}>
+					<VStack spacing="4" w={responsiveWidths}>
 						<EmailInput register={register} errors={errors} />
 						<Button
 							colorScheme="blue"
-							size="md"
 							type="submit"
 							disabled={isSubmitting}
 							w="full"
