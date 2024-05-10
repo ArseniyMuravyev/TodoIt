@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { t } from "i18next";
 import { FC } from "react";
-import { Pagination } from "./Pagination";
+import { Pagination } from "../common/Pagination";
 import { TodoContainer } from "./TodoContainer";
 import { PaginationStates } from "./TodoList";
 

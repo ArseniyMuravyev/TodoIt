@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { FormValues, PasswordInput } from "../components/PasswordInput";
+import { FormValues, PasswordInput } from "../components/common/PasswordInput";
 import { TResetPasswordData, resetPassword } from "../features/user/actions";
 import { useToast } from "../hooks/useToast";
 import { useDispatch } from "../store/store";

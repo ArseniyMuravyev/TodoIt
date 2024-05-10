@@ -20,7 +20,7 @@ export class AuthService {
 		return await api.post<AuthResponse>("auth/register", registerData);
 	}
 
-	static async logout(): Promise<AxiosResponse<AuthResponse>> {
+	static async logout(): Promise<AxiosResponse> {
 		return await api.post<AuthResponse>("auth/logout");
 	}
 
@@ -40,16 +40,5 @@ export class AuthService {
 			resetCode,
 			newPassword,
 		});
-	}
-
-	static async updateUser(
-		id: string,
-		name: string
-	): Promise<AxiosResponse<AuthResponse>> {
-		return await api.put<AuthResponse>(`auth/user/${id}`, { id, name });
-	}
-
-	static async deleteUser(id: string): Promise<AxiosResponse<AuthResponse>> {
-		return await api.delete(`auth/user/${id}`);
 	}
 }

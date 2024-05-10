@@ -3,8 +3,8 @@ import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { EmailInput } from "../components/EmailInput";
-import { FormValues, PasswordInput } from "../components/PasswordInput";
+import { EmailInput } from "../components/common/EmailInput";
+import { FormValues, PasswordInput } from "../components/common/PasswordInput";
 import {
 	TRegisterData,
 	register as registerUser,

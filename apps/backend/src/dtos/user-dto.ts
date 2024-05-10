@@ -5,11 +5,13 @@ export class UserDto {
 	email: string;
 	id: string;
 	isActivated: boolean;
+	avatarName?: string;
 
 	constructor(model: IUserSchema) {
 		this.name = model.name;
 		this.email = model.email;
-		this.id = model._id ? model._id : "";
+		this.id = model._id;
 		this.isActivated = model.isActivated;
+		this.avatarName = model.avatarName;
 	}
 }

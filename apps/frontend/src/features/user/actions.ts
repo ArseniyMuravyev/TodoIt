@@ -1,8 +1,8 @@
-import { TUser } from "@arseniy/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AuthResponse } from "../../models/response/AuthResponse";
 import { AuthService } from "../../services/AuthService";
+import { UserService } from "../../services/UserService";
 
 export type TRegisterData = {
 	email: string;
@@ -43,7 +43,7 @@ export const logout = createAsyncThunk("user/logoutUser", async (_) => {
 export const deleteUser = createAsyncThunk(
 	"user/deleteUser",
 	async (id: string) => {
-		await AuthService.deleteUser(id);
+		await UserService.deleteUser(id);
 	}
 );
 
@@ -58,10 +58,27 @@ export const checkAuth = createAsyncThunk("user/checkUser", async (_) => {
 
 export const updateUser = createAsyncThunk(
 	"user/updateUser",
-	async (updateData: Omit<TUser, "email">) => {
-		const { id, name } = updateData;
-		const response = await AuthService.updateUser(id, name);
+	async ({ id, name }: { id: string; name: string }) => {
+		const response = await UserService.updateUser(id, name);
+		return response.data;
+	}
+);
 
+export const uploadAvatar = createAsyncThunk(
+	"user/uploadAvatar",
+	async ({ id, file }: { id: string; file: File }) => {
+		const formData = new FormData();
+		formData.append("file", file);
+		const response = await UserService.uploadAvatar(id, formData);
+		console.log(response);
+		return response.data;
+	}
+);
+
+export const deleteAvatar = createAsyncThunk(
+	"user/deleteAvatar",
+	async (id: string) => {
+		const response = await UserService.deleteAvatar(id);
 		return response.data;
 	}
 );

@@ -1,8 +1,8 @@
 import { Heading } from "@chakra-ui/react";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { GetStarted } from "../components/GetStarted";
-import { HomeButtons } from "../components/HomeButtons";
+import { GetStarted } from "../components/home-page/GetStarted";
+import { HomeButtons } from "../components/home-page/HomeButtons";
 import { useSelector } from "../store/store";
 import { Section } from "../styles";
 

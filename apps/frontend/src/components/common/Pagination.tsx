@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { FC } from "react";
-import { DOTS, usePagination } from "../hooks/usePagination";
+import { DOTS, usePagination } from "../../hooks/usePagination";
 
 export interface PaginationProps {
 	onPageChange: (currentPage: number) => void;

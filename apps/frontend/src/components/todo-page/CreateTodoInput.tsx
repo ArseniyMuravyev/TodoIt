@@ -3,9 +3,9 @@ import { CirclePlus } from "lucide-react";
 import { Dispatch, FC, KeyboardEvent, SetStateAction, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { createTodo } from "../features/todo/actions";
-import { useDispatch } from "../store/store";
-import { responsiveDirection } from "../styles";
+import { useDispatch } from "../../store/store";
+import { createTodo } from "../../features/todo/actions";
+import { responsiveDirection } from "../../styles";
 import { DatePicker } from "./DatePicker";
 
 interface ICreateTodoInput {

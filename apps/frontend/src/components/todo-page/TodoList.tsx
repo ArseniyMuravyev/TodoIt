@@ -2,13 +2,13 @@ import { ITodo } from "@arseniy/types";
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { useSelector } from "../store/store";
+import { useSelector } from "../../store/store";
 import {
 	getCompletedTodos,
 	getTodosForCurrentWeek,
 	getTodosForToday,
 	sortTodosByDate,
-} from "../utils/helpers";
+} from "../../utils/helpers";
 import { DesktopTodoList } from "./DesktopTodoList";
 import { MobileTodoList } from "./MobileTodoList";
 

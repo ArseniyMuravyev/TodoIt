@@ -2,11 +2,13 @@ import { TUser } from "@arseniy/types";
 import { createSlice } from "@reduxjs/toolkit";
 import {
 	checkAuth,
+	deleteAvatar,
 	deleteUser,
 	login,
 	logout,
 	register,
 	updateUser,
+	uploadAvatar,
 } from "./actions";
 
 interface UserState {
@@ -35,7 +37,7 @@ export const userSlice = createSlice({
 				state.loading = false;
 				state.isAuthenticated = true;
 			})
-			.addCase(login.rejected, (state, action) => {
+			.addCase(login.rejected, (state) => {
 				state.loading = false;
 			})
 			.addCase(logout.pending, (state) => {
@@ -46,7 +48,7 @@ export const userSlice = createSlice({
 				state.loading = false;
 				state.isAuthenticated = false;
 			})
-			.addCase(logout.rejected, (state, action) => {
+			.addCase(logout.rejected, (state) => {
 				state.loading = false;
 			})
 			.addCase(register.fulfilled, (state, action) => {
@@ -57,7 +59,7 @@ export const userSlice = createSlice({
 			.addCase(register.pending, (state) => {
 				state.loading = true;
 			})
-			.addCase(register.rejected, (state, action) => {
+			.addCase(register.rejected, (state) => {
 				state.loading = false;
 			})
 			.addCase(updateUser.pending, (state) => {
@@ -69,7 +71,7 @@ export const userSlice = createSlice({
 					state.user.name = action.payload.name;
 				}
 			})
-			.addCase(updateUser.rejected, (state, action) => {
+			.addCase(updateUser.rejected, (state) => {
 				state.loading = false;
 			})
 			.addCase(checkAuth.fulfilled, (state, action) => {
@@ -79,18 +81,42 @@ export const userSlice = createSlice({
 			.addCase(checkAuth.pending, (state) => {
 				state.loading = true;
 			})
-			.addCase(checkAuth.rejected, (state, action) => {
+			.addCase(checkAuth.rejected, (state) => {
 				state.loading = false;
 			})
 			.addCase(deleteUser.pending, (state) => {
 				state.loading = true;
 			})
-			.addCase(deleteUser.fulfilled, (state, action) => {
+			.addCase(deleteUser.fulfilled, (state) => {
 				state.user = null;
 				state.loading = false;
 				state.isAuthenticated = false;
 			})
-			.addCase(deleteUser.rejected, (state, action) => {
+			.addCase(deleteUser.rejected, (state) => {
+				state.loading = false;
+			})
+			.addCase(uploadAvatar.pending, (state) => {
+				state.loading = true;
+			})
+			.addCase(uploadAvatar.fulfilled, (state, action) => {
+				state.loading = false;
+				if (state.user && action.payload.avatarName) {
+					state.user.avatarName = action.payload.avatarName;
+				}
+			})
+			.addCase(uploadAvatar.rejected, (state) => {
+				state.loading = false;
+			})
+			.addCase(deleteAvatar.pending, (state) => {
+				state.loading = true;
+			})
+			.addCase(deleteAvatar.fulfilled, (state) => {
+				state.loading = false;
+				if (state.user) {
+					state.user.avatarName = undefined;
+				}
+			})
+			.addCase(deleteAvatar.rejected, (state) => {
 				state.loading = false;
 			});
 	},

@@ -35,7 +35,8 @@
 		"email_required": "The email is required",
 		"login_failed": "You entered the wrong email or password",
 		"unexpected_fail": "An unexpected error has occurred",
-		"profile": "Your profile"
+		"profile": "Your profile",
+		"delete_avatar": "Delete avatar"
 	},
 	"navigation": {
 		"home": "Home",
@@ -74,5 +75,10 @@
 		"profile": "An error occurred while updating the profile",
 		"empty": "Email and password should not be empty",
 		"home": "Return to home"
+	},
+	"search": {
+		"search": "Search",
+		"no_results": "No results found",
+		"placeholder": "Enter todo's title"
 	}
 }

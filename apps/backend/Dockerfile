@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY dist/package.json dist/package-lock.json* ./
 COPY apps/backend/swagger.yml /app/
+COPY apps/backend/src/static /app/static
 
 RUN yarn 
 

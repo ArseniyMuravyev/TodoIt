@@ -15,6 +15,7 @@ export const UserButton: FC<IUserButton> = ({ onClick }) => {
 				onClick={onClick}
 				colorScheme="teal"
 				icon={<User size="20" />}
+				w="100%"
 			></IconButton>
 		</NavLink>
 	);

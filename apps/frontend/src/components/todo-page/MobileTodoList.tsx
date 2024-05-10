@@ -1,7 +1,7 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Pagination } from "./Pagination";
+import { Pagination } from "../common/Pagination";
 import { TodoContainer } from "./TodoContainer";
 import { PaginationStates } from "./TodoList";
 
@@ -18,27 +18,20 @@ export const MobileTodoList: FC<IMobileTodoList> = ({
 }) => {
 	const { t } = useTranslation();
 	const [activeTab, setActiveTab] = useState<string>(t("todos.all_todos"));
+	const tabTitles = [
+		t("todos.all_todos"),
+		t("todos.today"),
+		t("todos.this_week"),
+		t("todos.completed"),
+	];
+	const currentIndex = tabTitles.indexOf(activeTab);
 
 	const handleNextTab = () => {
-		const tabTitles = [
-			t("todos.all_todos"),
-			t("todos.today"),
-			t("todos.this_week"),
-			t("todos.completed"),
-		];
-		const currentIndex = tabTitles.indexOf(activeTab);
 		const nextIndex = (currentIndex + 1) % tabTitles.length;
 		setActiveTab(tabTitles[nextIndex]);
 	};
 
 	const handlePrevTab = () => {
-		const tabTitles = [
-			t("todos.all_todos"),
-			t("todos.today"),
-			t("todos.this_week"),
-			t("todos.completed"),
-		];
-		const currentIndex = tabTitles.indexOf(activeTab);
 		const prevIndex = (currentIndex - 1 + tabTitles.length) % tabTitles.length;
 		setActiveTab(tabTitles[prevIndex]);
 	};
@@ -47,7 +40,7 @@ export const MobileTodoList: FC<IMobileTodoList> = ({
 		<Flex mt="8" direction="column" w="100%">
 			<Flex justifyContent="space-between" alignItems="center" px={2}>
 				<Button onClick={handlePrevTab}>{"<"}</Button>
-				<Text>{activeTab}</Text>
+				<Text fontSize="md">{activeTab}</Text>
 				<Button onClick={handleNextTab}>{">"}</Button>
 			</Flex>
 			<TodoContainer

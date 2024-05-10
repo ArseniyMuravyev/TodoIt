@@ -7,11 +7,11 @@ import {
 } from "@chakra-ui/react";
 import { Menu, X } from "lucide-react";
 import { FC } from "react";
-import { desktopDisplay, mobileDisplay, responsivePadding } from "../styles";
+import { desktopDisplay, mobileDisplay } from "../../../styles";
+import { DesktopMenu } from "../menu/DesktopMenu";
+import { MobileMenu } from "../menu/MobileMenu";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
-import { DesktopMenu } from "./DesktopMenu";
 import { Logo } from "./Logo";
-import { MobileMenu } from "./MobileMenu";
 import { Translator } from "./Translator";
 import { UserButton } from "./UserButton";
 
@@ -20,20 +20,9 @@ export const Header: FC = () => {
 	const { colorMode } = useColorMode();
 
 	return (
-		<Box as="header" px={responsivePadding}>
-			<Flex
-				justifyContent={{ base: "space-evenly", md: "space-between" }}
-				alignItems="center"
-				maxH="20"
-			>
+		<Box as="header">
+			<Flex justifyContent="space-between" alignItems="center" maxH="20">
 				<Logo />
-				<IconButton
-					display={mobileDisplay}
-					onClick={onToggle}
-					icon={isOpen ? <X /> : <Menu />}
-					variant={"outline"}
-					aria-label={"Toggle Navigation"}
-				/>
 				<Box as="nav">
 					<DesktopMenu />
 
@@ -55,6 +44,13 @@ export const Header: FC = () => {
 					<ColorModeSwitcher />
 					<Translator />
 				</Flex>
+				<IconButton
+					display={mobileDisplay}
+					onClick={onToggle}
+					icon={isOpen ? <X /> : <Menu />}
+					variant="outline"
+					aria-label="Toggle Navigation"
+				/>
 			</Flex>
 		</Box>
 	);

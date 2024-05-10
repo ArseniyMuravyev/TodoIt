@@ -12,4 +12,5 @@ export interface TUser {
 	accessToken?: string;
 	refreshToken?: string;
 	isActivated?: boolean;
+	avatarName?: string;
 }

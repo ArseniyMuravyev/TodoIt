@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "../store/store";
-import { Preloader } from "./Preloader";
+import { useSelector } from "../../store/store";
+import { Preloader } from "../common/Preloader";
 
 type ProtectedRouteProps = {
 	onlyUnAuth?: boolean;

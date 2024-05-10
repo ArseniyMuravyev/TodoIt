@@ -7,8 +7,8 @@ export interface IUserSchema extends Document {
 	isActivated: boolean;
 	activationLink: string;
 	resetCode: string;
-	resetCodeExpire: number;
-	_id?: string;
+	_id: string;
+	avatarName?: string;
 }
 
 const UserSchema = new Schema({
@@ -39,8 +39,8 @@ const UserSchema = new Schema({
 		required: false,
 		index: true,
 	},
-	resetCodeExpire: {
-		type: Number,
+	avatarName: {
+		type: String,
 		required: false,
 	},
 });

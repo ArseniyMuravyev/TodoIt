@@ -9,12 +9,13 @@ import {
 	getTodoById,
 	removeTodo,
 	updateTodo,
-} from "../features/todo/actions";
-import { useToast } from "../hooks/useToast";
-import { useDispatch, useSelector } from "../store/store";
-import { buttonSize, responsiveDirection } from "../styles";
-import { formatDate } from "../utils/helpers";
-import { Modal } from "./Modal";
+} from "../../features/todo/actions";
+import { useToast } from "../../hooks/useToast";
+import { useDispatch, useSelector } from "../../store/store";
+import { buttonSize, responsiveDirection } from "../../styles";
+import { formatDate } from "../../utils/helpers";
+import completionSoundFile from "../../assets/audios/completion.mp3";
+import { Modal } from "../modal/Modal";
 
 export interface IConfirmDeletion {
 	handleDelete: MouseEventHandler<HTMLButtonElement>;
@@ -30,6 +31,8 @@ export const TodoInfo: FC = () => {
 	const { showSuccess } = useToast();
 	const navigate = useNavigate();
 	const { t } = useTranslation();
+
+	const completionSound = new Audio(completionSoundFile);
 
 	useEffect(() => {
 		if (id) {
@@ -72,6 +75,9 @@ export const TodoInfo: FC = () => {
 
 	const handleComplete = () => {
 		dispatch(completeTodo(todo));
+		if (!todo.completed) {
+			completionSound.play();
+		}
 	};
 
 	const handleOpenModal = () => {
@@ -93,7 +99,7 @@ export const TodoInfo: FC = () => {
 					placeholder={t("todos.task_name")}
 				/>
 			) : (
-				<Text fontSize="md">{todo?.title}</Text>
+				<Text fontSize="xl">{todo?.title}</Text>
 			)}
 			<Flex
 				justifyContent="space-between"

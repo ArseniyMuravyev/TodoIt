@@ -4,7 +4,6 @@ describe("Интегрированные тесты для приложения"
 			fixture: "todos.json",
 		});
 
-		cy.setCookie("accessToken", "test_access_token");
 		cy.window().then((win) => {
 			win.localStorage.setItem("refreshToken", "test_refresh_token");
 		});
@@ -20,8 +19,6 @@ describe("Интегрированные тесты для приложения"
 			force: true,
 		});
 		cy.url().should("eq", "http://localhost:4200/");
-
-		cy.getCookie("accessToken").should("exist");
 	});
 
 	afterEach(() => {

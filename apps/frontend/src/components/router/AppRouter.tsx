@@ -1,25 +1,26 @@
 import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import { App } from "../app";
-import Home from "../pages/Home";
-import { Modal } from "./Modal";
-import { Preloader } from "./Preloader";
+import { App } from "../../app";
+import { Preloader } from "../common/Preloader";
+import { Modal } from "../modal/Modal";
+import { SearchModal } from "../modal/SearchModal";
+import { TodoInfo } from "../todo-page/TodoInfo";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { TodoInfo } from "./TodoInfo";
 
-const ErrorPage = lazy(() => import("../pages/ErrorPage"));
-const Login = lazy(() => import("../pages/Login"));
-const Register = lazy(() => import("../pages/Register"));
-const ResetPassword = lazy(() => import("../pages/ResetPassword"));
-const Todos = lazy(() => import("../pages/Todos"));
-const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
-const Profile = lazy(() => import("../pages/Profile"));
+const Home = lazy(() => import("../../pages/Home"));
+const ErrorPage = lazy(() => import("../../pages/ErrorPage"));
+const Login = lazy(() => import("../../pages/Login"));
+const Register = lazy(() => import("../../pages/Register"));
+const ResetPassword = lazy(() => import("../../pages/ResetPassword"));
+const Todos = lazy(() => import("../../pages/Todos"));
+const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
+const Profile = lazy(() => import("../../pages/Profile"));
 
 export const router = createBrowserRouter([
 	{
 		element: (
 			<Suspense fallback={<Preloader />}>
-				<App />,
+				<App />
 			</Suspense>
 		),
 		errorElement: (
@@ -30,7 +31,11 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <Home />,
+				element: (
+					<Suspense fallback={<Preloader />}>
+						<Home />
+					</Suspense>
+				),
 			},
 			{
 				path: "/register",
@@ -95,9 +100,19 @@ export const router = createBrowserRouter([
 					{
 						path: ":id",
 						element: (
-							<Modal title="Todo!">
+							<Modal title="Todo info">
 								<TodoInfo />
 							</Modal>
+						),
+					},
+					{
+						path: "search",
+						element: (
+							<Suspense fallback={<Preloader />}>
+								<ProtectedRoute>
+									<SearchModal />
+								</ProtectedRoute>
+							</Suspense>
 						),
 					},
 				],

@@ -3,7 +3,7 @@ import { StrictMode } from "react";
 import * as ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./components/AppRouter";
+import { router } from "./components/router/AppRouter";
 import "./i18n";
 import store from "./store/store";
 import { theme } from "./styles";

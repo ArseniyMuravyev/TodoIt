@@ -43,9 +43,9 @@ export const responsiveDirection:
 	md: "row",
 };
 
-export const desktopDisplay = { base: "none", md: "flex" };
+export const desktopDisplay = { base: "none", lg: "flex" };
 
-export const mobileDisplay = { base: "flex", md: "none" };
+export const mobileDisplay = { base: "flex", lg: "none" };
 
 export const responsivePadding = { base: "4", md: "12" };
 

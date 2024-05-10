@@ -1,10 +1,13 @@
-import { Flex, Slide, Stack } from "@chakra-ui/react";
-import { FC } from "react";
+import { Flex, Slide, Stack, Text } from "@chakra-ui/react";
+import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
-import { ColorModeSwitcher } from "./ColorModeSwitcher";
-import { Translator } from "./Translator";
-import { UserButton } from "./UserButton";
+import { Modal } from "../../modal/Modal";
+import { SearchModal } from "../../modal/SearchModal";
+import { ColorModeSwitcher } from "../header/ColorModeSwitcher";
+import { SearchButton } from "../header/SearchButton";
+import { Translator } from "../header/Translator";
+import { UserButton } from "../header/UserButton";
 
 interface IMobileMenu {
 	isOpen: boolean;
@@ -18,6 +21,16 @@ export const MobileMenu: FC<IMobileMenu> = ({
 	colorMode,
 }) => {
 	const { t } = useTranslation();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleClick = () => {
+		setIsModalOpen((prev) => !prev);
+	};
+
+	const handleClose = () => {
+		setIsModalOpen(false);
+	};
+
 	return (
 		<Slide direction="left" in={isOpen} style={{ zIndex: 10 }}>
 			<Flex
@@ -37,16 +50,22 @@ export const MobileMenu: FC<IMobileMenu> = ({
 			>
 				<Stack as="nav" spacing="8" textAlign="center">
 					<NavLink to="/" onClick={onToggle}>
-						{t("navigation.home")}
+						<Text fontSize="md"> {t("navigation.home")}</Text>
 					</NavLink>
 					<NavLink to="/todos" onClick={onToggle} data-cy="todos">
-						{t("navigation.my_todos")}
+						<Text fontSize="md">{t("navigation.my_todos")}</Text>
 					</NavLink>
+					<SearchButton handleClick={handleClick} />
 					<UserButton onClick={onToggle} />
 					<ColorModeSwitcher />
 					<Translator />
 				</Stack>
 			</Flex>
+			{isModalOpen && (
+				<Modal title={t("search.search")} handleClose={handleClose}>
+					<SearchModal />
+				</Modal>
+			)}
 		</Slide>
 	);
 };

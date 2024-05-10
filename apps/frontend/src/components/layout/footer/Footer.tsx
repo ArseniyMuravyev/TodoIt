@@ -1,6 +1,6 @@
 import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import { FC } from "react";
-import { responsivePadding } from "../styles";
+import { responsivePadding } from "../../../styles";
 import { GithubIcon } from "./GithubIcon";
 
 export const Footer: FC = () => {
