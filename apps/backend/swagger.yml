@@ -105,7 +105,7 @@ paths:
         404:
           description: "Todo not found"
 
-          /auth/register:
+  /auth/register:
     post:
       summary: "Registers a new user"
       operationId: "registerUser"
@@ -122,7 +122,9 @@ paths:
             $ref: "#/definitions/User"
       responses:
         200:
-          description: "User registered and tokens generated"
+          description: "User registered"
+          schema:
+            $ref: "#/definitions/User"
         400:
           description: "User already exists"
 
@@ -139,21 +141,13 @@ paths:
           name: "body"
           description: "User's login credentials"
           required: true
+          schema:
+            $ref: "#/definitions/LoginBody"
       responses:
         200:
           description: "Login successful"
-        401:
-          description: "Unauthorized"
-
-  /auth/user:
-    get:
-      summary: "Gets the current logged in user's information"
-      operationId: "getCurrentUser"
-      produces:
-        - "application/json"
-      responses:
-        200:
-          description: "User information returned"
+          schema:
+            $ref: "#/definitions/Token"
         401:
           description: "Unauthorized"
 
@@ -166,6 +160,84 @@ paths:
       responses:
         200:
           description: "Logout successful"
+
+  /user/{id}/avatar:
+    post:
+      summary: "Uploads an avatar image for the user."
+      operationId: "uploadAvatar"
+      consumes:
+        - "multipart/form-data"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "avatar"
+          in: "formData"
+          type: "file"
+          required: true
+          description: "The file to upload."
+      responses:
+        200:
+          description: "Avatar successfully uploaded"
+        400:
+          description: "Invalid input"
+    delete:
+      summary: "Deletes a user's avatar"
+      description: "Deletes the avatar of the user with the provided ID."
+      operationId: "deleteAvatar"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Avatar successfully deleted"
+        404:
+          description: "Avatar not found"
+
+  /user/{id}:
+    delete:
+      summary: "Deletes a user"
+      description: "Deletes the user with the provided ID."
+      operationId: "deleteUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "User successfully deleted"
+        404:
+          description: "User not found"
+
+    put:
+      summary: "Updates a user"
+      description: "Updates the information of the user with the provided ID."
+      operationId: "updateUser"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "User object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "User information updated"
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: "User not found"
+
 definitions:
   Todo:
     type: "object"
@@ -179,7 +251,8 @@ definitions:
       completed:
         type: "boolean"
       date:
-        type: "date"
+        format: "date-time" 
+        type: "string"
     example:
       _id: "d5fE_asz"
       title: "Walk the dog"
@@ -202,9 +275,26 @@ definitions:
       resetCode:
         type: "string"
       resetCodeExpire:
-        type: "number"
+        type: "integer"
     example:
       _id: "d5fE_aszasdasdq"
       email: "johndoe@gmail.com"
       password: "password"
       name: "John"
+  Token: 
+    type: "object"
+    properties:
+      refreshToken:
+        type: "string"
+    required:
+      - "refreshToken"
+  LoginBody:
+    type: "object" 
+    required:
+      - "email"
+      - "password"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
