@@ -37,6 +37,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(errorMiddleware);
 
-app.listen(PORT, () => {
+app.listen(PORT, ( ) => {
 	connectDB();
 });
