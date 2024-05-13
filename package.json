@@ -5,6 +5,17 @@
 	"scripts": {
 		"debug": "node --inspect-brk ./node_modules/@nrwl/cli/bin/nx.js test frontend --runInBand --no-cache"
 	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.(js|jsx|ts|tsx)": [
+			"npm run lint:write",
+			"git add"
+		]
+	},
 	"private": true,
 	"dependencies": {
 		"@chakra-ui/react": "^2.8.2",
