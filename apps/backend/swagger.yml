@@ -251,7 +251,7 @@ definitions:
       completed:
         type: "boolean"
       date:
-        format: "date-time" 
+        format: "date-time"
         type: "string"
     example:
       _id: "d5fE_asz"
@@ -281,7 +281,7 @@ definitions:
       email: "johndoe@gmail.com"
       password: "password"
       name: "John"
-  Token: 
+  Token:
     type: "object"
     properties:
       refreshToken:
@@ -289,7 +289,7 @@ definitions:
     required:
       - "refreshToken"
   LoginBody:
-    type: "object" 
+    type: "object"
     required:
       - "email"
       - "password"

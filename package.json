@@ -6,14 +6,11 @@
 		"debug": "node --inspect-brk ./node_modules/@nrwl/cli/bin/nx.js test frontend --runInBand --no-cache",
 		"prepare": "husky"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
 	"lint-staged": {
 		"*.(js|jsx|ts|tsx)": [
-			"npm run lint:write",
+			"npx nx format:write --all",
+			"npx nx run frontend:lint",
+			"npx nx run backend:lint",
 			"git add"
 		]
 	},

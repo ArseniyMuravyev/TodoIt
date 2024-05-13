@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
 	<StrictMode>
-		<Provider store={store} >
-			<ChakraProvider theme={theme} >
-				<RouterProvider router={router}  />
+		<Provider store={store}>
+			<ChakraProvider theme={theme}>
+				<RouterProvider router={router} />
 			</ChakraProvider>
 		</Provider>
 	</StrictMode>
