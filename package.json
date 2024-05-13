@@ -3,7 +3,8 @@
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {
-		"debug": "node --inspect-brk ./node_modules/@nrwl/cli/bin/nx.js test frontend --runInBand --no-cache"
+		"debug": "node --inspect-brk ./node_modules/@nrwl/cli/bin/nx.js test frontend --runInBand --no-cache",
+		"prepare": "husky"
 	},
 	"husky": {
 		"hooks": {
