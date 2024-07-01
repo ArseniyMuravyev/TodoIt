@@ -41,3 +41,6 @@ Thumbs.db
 
 .nx/cache
 /.yarn
+
+
+.nx/workspace-data

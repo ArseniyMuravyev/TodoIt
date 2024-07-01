@@ -1,0 +1,18 @@
+{
+  "projects": [
+    {
+      "name": "frontend",
+      "path": "apps/frontend",
+      "buildCommand": "yarn build",
+      "outputDirectory": "apps/frontend/.next",
+      "framework": "vite"
+    },
+    {
+      "name": "backend",
+      "path": "apps/backend",
+      "buildCommand": "yarn build",
+      "outputDirectory": "apps/backend/dist",
+      "framework": "none"
+    }
+  ]
+}
