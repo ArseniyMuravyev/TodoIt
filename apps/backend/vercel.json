@@ -1,15 +1,4 @@
 {
-  "builds": [
-    {
-      "src": "src/**/*.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/src/(.*)",
-      "dest": "../../dist/apps/backend/"
-
-    }
-  ]
+  "buildCommand": "npx nx build backend",
+  "dest": "../../dist/apps/backend/"
 }
