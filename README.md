@@ -1,5 +1,9 @@
 # TodoIt!
 
+## Main page screenshot 
+
+<img src="/apps/frontend/public/images/todoit.png" alt="main page screenshot" />
+
 ## Technology stack
 
 ### Monorepo
