@@ -27,7 +27,11 @@
 
 ## Start the application
 
+<<<<<<< HEAD
 Run `npx nx serve frontend` or `yarn nx serve frontend`
+=======
+Run `npx nx serve backend` or `yarn nx serve backend`
+>>>>>>> 70fcc9ba844d8a319187b30e09af24f984946e12
 
 ## Run backend using Docker
 
