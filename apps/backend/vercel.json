@@ -1,4 +1,0 @@
-{
-  "buildCommand": "npx nx build backend",
-  "dest": "../../dist/apps/backend/"
-}
