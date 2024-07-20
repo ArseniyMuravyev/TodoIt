@@ -4,6 +4,10 @@
 
 <img src="/apps/frontend/public/images/todoit.png" alt="main page screenshot" />
 
+## About the project 
+
+Todoit! is a fully funtioning todo application with proper authorization. It's my biggest and hardest pet-project at the moment and I'm really proud of the accomplished work. Try it and I will be happy to get your feedback! 
+
 ## Technology stack
 
 ### Monorepo
